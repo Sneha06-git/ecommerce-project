@@ -49,8 +49,7 @@ const registerUser = (req, res) => {
 /// LOGIN USER
 const loginUser = (req, res) => {
     const { email, password } = req.body;
-    console.log("Login email:", email);
-    console.log("Login password received:", password);
+    
     // Check if fields are filled
     if (!email || !password) {
         return res.redirect( "/auth/login?error=Please%20enter%20email%20and%20password");
@@ -59,7 +58,7 @@ const loginUser = (req, res) => {
     // Find user by email
     User.findOne({ email: email })
         .then((user) => {
-            console.log("User found:", user);
+            
             if (!user) {
                 throw new Error("Invalid email or password");
             }

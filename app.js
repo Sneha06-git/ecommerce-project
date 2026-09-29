@@ -13,31 +13,23 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 
-// ==============================
 // DATABASE
-// ==============================
 
 connectDB();
 
 
-// ==============================
 // VIEW ENGINE
-// ==============================
-
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-//==============================
+
 // MIDDLEWARE
-// ==============================
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-
-// ==============================
 // SESSION
-// ==============================
 
 app.use(
     session({
@@ -59,29 +51,19 @@ app.use(
 app.use("/auth", authRoutes);
 
 
-
-
-// ==============================
 // HOME PAGE
-// ==============================
-
 app.get("/", (req, res) => {
     res.send("E-Commerce Website is running!");
 });
 
-
-// ==============================
 // 404
-// ==============================
 
 app.use((req, res) => {
     res.status(404).send("Page not found");
 });
 
 
-// ==============================
 // START SERVER
-// ==============================
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
