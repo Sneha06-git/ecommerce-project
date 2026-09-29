@@ -4,6 +4,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 
 dotenv.config();
 
@@ -26,18 +27,11 @@ connectDB();
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-
-// ==============================
+//==============================
 // MIDDLEWARE
 // ==============================
-
-// Read form data
 app.use(express.urlencoded({ extended: true }));
-
-// Read JSON data
 app.use(express.json());
-
-// Serve CSS, JavaScript and images
 app.use(express.static("public"));
 
 
@@ -60,6 +54,11 @@ app.use(
         }
     })
 );
+
+// AUTH ROUTES
+app.use("/auth", authRoutes);
+
+
 
 
 // ==============================
