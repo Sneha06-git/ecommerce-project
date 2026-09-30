@@ -5,6 +5,7 @@ const MongoStore = require("connect-mongo").default;
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
-
+app.use("/uploads", express.static("uploads"));
 // SESSION
 
 app.use(
@@ -49,6 +50,9 @@ app.use(
 
 // AUTH ROUTES
 app.use("/auth", authRoutes);
+
+// ADMIN ROUTES
+app.use("/admin", adminRoutes);
 
 
 // HOME PAGE
