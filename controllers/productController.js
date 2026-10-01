@@ -82,6 +82,27 @@ const getProducts = (req, res) => {
         });
 };
 
+const getAllProducts = (req, res) => {
+
+    Product.find()
+        .then((products) => {
+
+            res.render("user/products", {
+                products: products
+            });
+
+        })
+        .catch((error) => {
+
+            console.log(error);
+
+            res.status(500).send(
+                "Failed to load products"
+            );
+
+        });
+
+};
 
 // GET SINGLE PRODUCT
 
@@ -155,5 +176,6 @@ const getProductById = (req, res) => {
 module.exports = {
     addProduct,
     getProducts,
-    getProductById
+    getProductById,
+    getAllProducts
 };
