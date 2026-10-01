@@ -6,7 +6,8 @@ const adminMiddleware = require("../middleware/adminMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
 const {
-    addProduct
+    addProduct,
+    getProducts
 } = require("../controllers/productController");
 
 
@@ -29,5 +30,13 @@ router.post(
     upload.single("image"),
     addProduct
 );
+
+// View all products
+router.get(
+    "/products",
+    adminMiddleware,
+    getProducts
+);
+
 
 module.exports = router;

@@ -54,6 +54,9 @@ app.use("/auth", authRoutes);
 // ADMIN ROUTES
 app.use("/admin", adminRoutes);
 
+//PRODUCT ROUTES
+const productRoutes = require("./routes/productRoutes");
+app.use("/products", productRoutes);
 
 // HOME PAGE
 app.get("/", (req, res) => {

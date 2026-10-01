@@ -1,0 +1,72 @@
+/* =========================================================
+   E-COMMERCE WEBSITE - MAIN STYLESHEET
+========================================================= */
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+
+/* =========================================================
+   PRODUCT CARDS
+========================================================= */
+
+.product-image {
+    height: 220px;
+    width: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
+
+/* =========================================================
+   PRODUCT DETAILS PAGE
+========================================================= */
+
+.product-detail-image {
+    width: 100%;
+    height: 450px;
+    object-fit: contain;
+}
+
+.product-detail-title {
+    margin-bottom: 15px;
+}
+
+.product-detail-category {
+    color: #666;
+}
+
+.product-detail-price {
+    margin: 20px 0;
+}
+
+.product-detail-description {
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   PRODUCT CARD LINK
+========================= */
+
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-card-link .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card-link .card:hover {
+    transform: translateY(-4px);
+}
