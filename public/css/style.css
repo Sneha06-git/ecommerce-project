@@ -70,3 +70,53 @@ body {
 .product-card-link .card:hover {
     transform: translateY(-4px);
 }
+
+/* =========================================================
+   CART PAGE
+========================================================= */
+
+.cart-product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    padding: 10px;
+}
+
+/* =========================================================
+   NAVBAR CART
+========================================================= */
+
+.cart-link {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.cart-link:hover {
+    color: #ddd;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -10px;
+    right: -12px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.add-to-cart-button {
+    margin-top: 10px;
+}

@@ -6,7 +6,7 @@ const MongoStore = require("connect-mongo").default;
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-
+const cartMiddleware = require("./middleware/cartMiddleware");
 dotenv.config();
 
 const app = express();
@@ -30,6 +30,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
+
+
 // SESSION
 
 app.use(
@@ -48,6 +50,8 @@ app.use(
     })
 );
 
+app.use(cartMiddleware);
+
 // AUTH ROUTES
 app.use("/auth", authRoutes);
 
@@ -57,6 +61,10 @@ app.use("/admin", adminRoutes);
 //PRODUCT ROUTES
 const productRoutes = require("./routes/productRoutes");
 app.use("/products", productRoutes);
+
+//CART ROUTES
+const cartRoutes = require("./routes/cartRoutes");
+app.use("/cart", cartRoutes);
 
 // HOME PAGE
 app.get("/", (req, res) => {

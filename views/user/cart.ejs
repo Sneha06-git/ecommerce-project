@@ -1,0 +1,86 @@
+<%- include("../partials/header", { title: "My Cart | E-Commerce" }) %>
+
+<body>
+
+    <%- include("../partials/navbar") %>
+
+    <div class="container py-5">
+
+        <h1 class="mb-4">My Cart</h1>
+
+        <% if (!cart || cart.products.length === 0) { %>
+
+            <div class="alert alert-info">
+                Your cart is empty.
+            </div>
+
+            <a href="/auth/dashboard" class="btn btn-primary">
+                Continue Shopping
+            </a>
+
+        <% } else { %>
+
+            <div class="row">
+
+                <% cart.products.forEach((item) => { %>
+
+                    <div class="col-md-6 mb-4">
+
+                        <div class="card h-100">
+
+                            <div class="row g-0">
+
+                                <div class="col-4">
+
+                                    <img
+                                        src="<%= item.product.image %>"
+                                        alt="<%= item.product.name %>"
+                                        class="cart-product-image"
+                                    >
+
+                                </div>
+
+                                <div class="col-8">
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title">
+                                            <%= item.product.name %>
+                                        </h5>
+
+                                        <p class="card-text">
+                                            ₹<%= item.product.price %>
+                                        </p>
+
+                                        <p class="card-text">
+                                            Quantity:
+                                            <strong>
+                                                <%= item.quantity %>
+                                            </strong>
+                                        </p>
+
+                                        <p class="card-text">
+                                            Subtotal:
+                                            ₹<%= item.product.price * item.quantity %>
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</body>
+</html>

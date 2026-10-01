@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Product = require("../models/Product");
-
+const Cart = require("../models/Cart");
 
 // ADD PRODUCT
 const addProduct = (req, res) => {
@@ -84,6 +84,7 @@ const getProducts = (req, res) => {
 
 
 // GET SINGLE PRODUCT
+
 const getProductById = (req, res) => {
 
     const productId = req.params.id;
@@ -100,15 +101,53 @@ const getProductById = (req, res) => {
                 return res.status(404).send("Product not found");
             }
 
-            res.render("user/product", {
-                product: product
-            });
+            // If user is not logged in,
+            // their cart quantity is 0
+            if (!req.session.userId) {
+
+                return res.render("user/product", {
+                    product: product,
+                    cartQuantity: 0
+                });
+
+            }
+
+            // Find current user's cart
+            return Cart.findOne({
+                user: req.session.userId
+            })
+                .then((cart) => {
+
+                    let cartQuantity = 0;
+
+                    if (cart) {
+
+                        const cartProduct =
+                            cart.products.find(
+                                (item) =>
+                                    item.product.toString() === productId
+                            );
+
+                        if (cartProduct) {
+                            cartQuantity = cartProduct.quantity;
+                        }
+                    }
+
+                    res.render("user/product", {
+                        product: product,
+                        cartQuantity: cartQuantity
+                    });
+
+                });
 
         })
         .catch((error) => {
 
             console.log(error);
-            res.status(500).send("Failed to load product");
+
+            res.status(500).send(
+                "Failed to load product"
+            );
 
         });
 };
