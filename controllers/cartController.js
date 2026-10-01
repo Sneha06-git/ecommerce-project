@@ -256,9 +256,234 @@ const getCart = (req, res) => {
 
 };
 
+// =========================================================
+// UPDATE CART QUANTITY
+// =========================================================
 
+const updateCart = (req, res) => {
+
+    const userId = req.session.userId;
+    const productId = req.body.productId;
+    const quantity = Number(req.body.quantity);
+
+
+    if (!Number.isInteger(quantity) || quantity < 1) {
+
+        return res.status(400).json({
+            success: false,
+            message: "Invalid quantity"
+        });
+
+    }
+
+
+    Product.findById(productId)
+
+        .then((product) => {
+
+            if (!product) {
+
+                return res.status(404).json({
+                    success: false,
+                    message: "Product not found"
+                });
+
+            }
+
+
+            if (quantity > product.stock) {
+
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        `Only ${product.stock} item(s) available in stock`
+                });
+
+            }
+
+
+            return Cart.findOne({
+                user: userId
+            })
+
+                .then((cart) => {
+
+                    if (!cart) {
+
+                        return res.status(404).json({
+                            success: false,
+                            message: "Cart not found"
+                        });
+
+                    }
+
+
+                    const cartProduct =
+                        cart.products.find(
+                            (item) =>
+                                item.product.toString() === productId
+                        );
+
+
+                    if (!cartProduct) {
+
+                        return res.status(404).json({
+                            success: false,
+                            message: "Product is not in your cart"
+                        });
+
+                    }
+
+
+                    cartProduct.quantity = quantity;
+
+
+                    return cart.save()
+
+                        .then(() => {
+
+                            let cartItemCount = 0;
+
+
+                            cart.products.forEach((item) => {
+
+                                cartItemCount += item.quantity;
+
+                            });
+
+
+                            res.json({
+
+                                success: true,
+
+                                message:
+                                    "Cart updated successfully",
+
+                                cartItemCount:
+                                    cartItemCount
+
+                            });
+
+                        });
+
+                });
+
+        })
+
+        .catch((error) => {
+
+            console.log(error);
+
+            res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to update cart"
+
+            });
+
+        });
+
+};
+
+
+// =========================================================
+// REMOVE PRODUCT FROM CART
+// =========================================================
+
+const removeFromCart = (req, res) => {
+
+    const userId = req.session.userId;
+    const productId = req.body.productId;
+
+
+    Cart.findOne({
+        user: userId
+    })
+
+        .then((cart) => {
+
+            if (!cart) {
+
+                return res.status(404).json({
+                    success: false,
+                    message: "Cart not found"
+                });
+
+            }
+
+
+            const productIndex =
+                cart.products.findIndex(
+                    (item) =>
+                        item.product.toString() === productId
+                );
+
+
+            if (productIndex === -1) {
+
+                return res.status(404).json({
+                    success: false,
+                    message: "Product is not in your cart"
+                });
+
+            }
+
+
+            cart.products.splice(productIndex, 1);
+
+
+            return cart.save()
+
+                .then(() => {
+
+                    let cartItemCount = 0;
+
+
+                    cart.products.forEach((item) => {
+
+                        cartItemCount += item.quantity;
+
+                    });
+
+
+                    res.json({
+
+                        success: true,
+
+                        message:
+                            "Product removed from cart",
+
+                        cartItemCount:
+                            cartItemCount
+
+                    });
+
+                });
+
+        })
+
+        .catch((error) => {
+
+            console.log(error);
+
+            res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to remove product"
+
+            });
+
+        });
+
+};
 
 module.exports = {
     addToCart,
-    getCart
+    getCart,
+    updateCart,
+    removeFromCart
 };
