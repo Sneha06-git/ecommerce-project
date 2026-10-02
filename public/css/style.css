@@ -498,70 +498,171 @@ body {
 
 
 /* =========================================================
-   NAVBAR CART
+   NAVBAR - E-COMMERCE HEADER
+========================================================= */
+
+.ecommerce-navbar {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    padding: 14px 0;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================================
+   NAVBAR - BRAND
+========================================================= */
+
+.ecommerce-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: white !important;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.ecommerce-brand i {
+    font-size: 21px;
+}
+
+.ecommerce-brand:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================================================
+   NAVBAR - CART
 ========================================================= */
 
 .cart-link {
-
     position: relative;
 
     color: white;
-
     text-decoration: none;
 
-    font-size: 22px;
+    font-size: 21px;
+
+    width: 42px;
+    height: 42px;
 
     display: inline-flex;
-
     align-items: center;
+    justify-content: center;
 
+    border-radius: 10px;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .cart-link:hover {
-
-    color: #ddd;
-
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
 }
 
-.cart-badge {
 
+/* =========================================================
+   NAVBAR - CART BADGE
+========================================================= */
+
+.cart-badge {
     position: absolute;
 
-    top: -10px;
+    top: -3px;
+    right: -3px;
 
-    right: -12px;
-
-    min-width: 18px;
-
-    height: 18px;
+    min-width: 19px;
+    height: 19px;
 
     padding: 0 5px;
 
     background-color: #dc3545;
-
     color: white;
 
-    border-radius: 50%;
+    border: 2px solid #1f2937;
+    border-radius: 50px;
 
-    font-size: 11px;
-
-    font-weight: bold;
+    font-size: 10px;
+    font-weight: 700;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
 }
 
 
-.add-to-cart-button {
+/* =========================================================
+   NAVBAR - LOGOUT BUTTON
+========================================================= */
 
-    margin-top: 10px;
+.navbar-logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 
+    padding: 9px 15px;
+
+    background-color: #dc3545;
+    color: white;
+
+    border: 1px solid #dc3545;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
+.navbar-logout-btn:hover {
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    color: white;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   NAVBAR - RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 576px) {
+
+    .ecommerce-navbar {
+        padding: 12px 0;
+    }
+
+    .ecommerce-brand {
+        font-size: 19px;
+    }
+
+    .ecommerce-brand i {
+        font-size: 18px;
+    }
+
+    .navbar-logout-btn {
+        padding: 8px 11px;
+        font-size: 13px;
+    }
+
+    .navbar-logout-btn i {
+        font-size: 12px;
+    }
+
+}
 
 /* =========================================================
    CART REMOVE BUTTON
