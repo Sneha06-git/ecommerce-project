@@ -4,174 +4,247 @@
 
     <%- include("../partials/navbar") %>
 
-    <div class="container py-5">
+    <!-- =========================
+         PRODUCTS PAGE HERO
+    ========================= -->
+    <section class="products-page-hero">
+        <div class="container">
 
-        <div class="text-center mb-5">
+            <div class="products-page-heading">
+                <span class="products-page-badge">
+                    <i class="fa-solid fa-store"></i>
+                    Our Collection
+                </span>
 
-            <h1>Our Products</h1>
+                <h1>Find Something You'll Love</h1>
 
-            <p class="text-muted">
-                Explore our collection and find what you need.
-            </p>
-
-        </div>
-        
-        <div class="row g-3 mb-4">
-
-    <div class="col-md-7">
-
-        <div class="input-group">
-
-            <span class="input-group-text">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </span>
-
-            <input
-                type="text"
-                id="productSearch"
-                class="form-control"
-                placeholder="Search products..."
-            >
+                <p>
+                    Explore our collection of products and discover
+                    something perfect for you.
+                </p>
+            </div>
 
         </div>
+    </section>
 
-    </div>
 
-    <div class="col-md-3">
+    <!-- =========================
+         PRODUCTS PAGE CONTENT
+    ========================= -->
+    <section class="products-page-content">
 
-        <select
-            id="categoryFilter"
-            class="form-select"
-        >
+        <div class="container">
 
-            <option value="all">
-                All Categories
-            </option>
+            <!-- =========================
+                 PRODUCT FILTERS
+            ========================= -->
+            <div class="products-filter-card">
 
-            <% 
-                const categories = [
-                    ...new Set(products.map(product => product.category))
-                ];
-            %>
+                <div class="row g-3 align-items-center">
 
-            <% categories.forEach((category) => { %>
+                    <!-- Search -->
+                    <div class="col-lg-6">
 
-                <option value="<%= category %>">
-                    <%= category %>
-                </option>
+                        <div class="product-search-box">
 
-            <% }) %>
+                            <i class="fa-solid fa-magnifying-glass"></i>
 
-        </select>
+                            <input
+                                type="text"
+                                id="productSearch"
+                                placeholder="Search products..."
+                            >
 
-    </div>
+                        </div>
 
-         <div class="col-md-2">
+                    </div>
 
-        <button
-            type="button"
-            id="clearFilters"
-            class="btn btn-outline-secondary w-100"
-        >
-            Clear
-        </button>
 
-        </div>
+                    <!-- Category -->
+                    <div class="col-lg-4">
 
-        </div>
-        <div
-        id="noProductsMessage"
-        class="alert alert-info text-center d-none"
-            >
-        No products found matching your search.
-</div>
-        <div class="row g-4">
+                        <select
+                            id="categoryFilter"
+                            class="product-category-select"
+                        >
 
-            <% if (products.length === 0) { %>
+                            <option value="all">
+                                All Categories
+                            </option>
 
-                <div class="col-12">
+                            <%
+                                const categories = [
+                                    ...new Set(
+                                        products.map(
+                                            product => product.category
+                                        )
+                                    )
+                                ];
+                            %>
 
-                    <div class="alert alert-info text-center">
-                        No products available right now.
+                            <% categories.forEach((category) => { %>
+
+                                <option value="<%= category %>">
+                                    <%= category %>
+                                </option>
+
+                            <% }) %>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Clear -->
+                    <div class="col-lg-2">
+
+                        <button
+                            type="button"
+                            id="clearFilters"
+                            class="products-clear-btn"
+                        >
+                            <i class="fa-solid fa-rotate-left"></i>
+                            Clear
+                        </button>
+
                     </div>
 
                 </div>
 
-            <% } %>
+            </div>
 
 
-            <% products.forEach((product) => { %>
+            <!-- =========================
+                 NO PRODUCTS MESSAGE
+            ========================= -->
+            <div
+                id="noProductsMessage"
+                class="products-no-results d-none"
+            >
+                <i class="fa-solid fa-box-open"></i>
 
-                <div
-                 class="col-md-6 col-lg-4 product-item"
-                 data-name="<%= product.name.toLowerCase() %>"
-                 data-category="<%= product.category.toLowerCase() %>"
-                >
-                    <a
-                        href="/products/<%= product._id %>"
-                        class="product-card-link"
-                    >
+                <h4>No products found</h4>
 
-                        <div class="card h-100 product-listing-card">
+                <p>
+                    Try changing your search or category filter.
+                </p>
+            </div>
 
-                            <img
-                                src="<%= product.image %>"
-                                alt="<%= product.name %>"
-                               class="product-listing-image"
-                            >
 
-                            <div class="card-body product-listing-body">
+            <!-- =========================
+                 PRODUCTS GRID
+            ========================= -->
+            <div class="row g-4">
 
-                               <h5 class="card-title product-listing-name">
-                                    <%= product.name %>
-                                </h5>
+                <% if (products.length === 0) { %>
 
-                                <p class="product-listing-category">
-                                    <%= product.category %>
-                                </p>
+                    <div class="col-12">
 
-                                <h5 class="product-card-price product-listing-price">
-                                    ₹<%= product.price %>
-                                </h5>
+                        <div class="products-empty-state">
 
-                                <% if (product.stock > 0) { %>
+                            <i class="fa-solid fa-box-open"></i>
 
-                                    <span class="badge bg-success">
-                                        In Stock
-                                    </span>
+                            <h3>No products available</h3>
 
-                                <% } else { %>
-
-                                    <span class="badge bg-danger">
-                                        Out of Stock
-                                    </span>
-
-                                <% } %>
-
-                                 <div class="product-listing-button">
-
-                                    <span class="btn btn-outline-primary btn-sm">
-                                    View Product
-                                    </span>
-
-                                 </div>
-
-                            </div>
-
-                           
+                            <p>
+                                There are no products available right now.
+                            </p>
 
                         </div>
 
-                    </a>
+                    </div>
 
-                </div>
+                <% } %>
 
-            <% }) %>
+
+                <% products.forEach((product) => { %>
+
+                    <div
+                        class="col-md-6 col-lg-4 product-item"
+                        data-name="<%= product.name.toLowerCase() %>"
+                        data-category="<%= product.category.toLowerCase() %>"
+                    >
+
+                        <a
+                            href="/products/<%= product._id %>"
+                            class="product-card-link"
+                        >
+
+                            <div class="product-listing-card">
+
+                                <!-- =========================
+                                     PRODUCT IMAGE
+                                ========================= -->
+                                <div class="product-image-wrapper">
+
+                                    <img
+                                        src="<%= product.image %>"
+                                        alt="<%= product.name %>"
+                                        class="product-listing-image"
+                                    >
+
+                                    <% if (product.stock > 0) { %>
+
+                                        <span class="product-stock-badge in-stock">
+                                            <i class="fa-solid fa-check"></i>
+                                            In Stock
+                                        </span>
+
+                                    <% } else { %>
+
+                                        <span class="product-stock-badge out-of-stock">
+                                            <i class="fa-solid fa-xmark"></i>
+                                            Out of Stock
+                                        </span>
+
+                                    <% } %>
+
+                                </div>
+
+
+                                <!-- =========================
+                                     PRODUCT INFORMATION
+                                ========================= -->
+                                <div class="product-listing-body">
+
+                                    <span class="product-listing-category">
+                                        <%= product.category %>
+                                    </span>
+
+                                    <h5 class="product-listing-name">
+                                        <%= product.name %>
+                                    </h5>
+
+                                    <div class="product-card-bottom">
+
+                                        <span class="product-listing-price">
+                                            ₹<%= product.price %>
+                                        </span>
+
+                                        <span class="product-view-btn">
+                                            View
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
 
         </div>
 
-    </div>
-    
+    </section>
+
+
     <script src="/js/main.js"></script>
 
 </body>
