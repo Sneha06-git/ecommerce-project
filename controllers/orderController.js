@@ -246,9 +246,124 @@ const getMyOrders = (req, res) => {
 
 };
 
+const getAllOrders = (req, res) => {
+
+    Order.find()
+        .populate("user")
+        .sort({ createdAt: -1 })
+        .then((orders) => {
+
+            res.render("admin/orders", {
+                orders: orders
+            });
+
+        })
+        .catch((error) => {
+
+            console.log(error);
+
+            res.status(500).send(
+                "Failed to load orders"
+            );
+
+        });
+
+};
+
+const getAdminOrderDetails = (req, res) => {
+
+    const orderId = req.params.id;
+
+    Order.findById(orderId)
+        .populate("user")
+        .then((order) => {
+
+            if (!order) {
+
+                return res.status(404).send(
+                    "Order not found"
+                );
+
+            }
+
+            res.render("admin/order-details", {
+                order: order
+            });
+
+        })
+        .catch((error) => {
+
+            console.log(error);
+
+            res.status(500).send(
+                "Failed to load order details"
+            );
+
+        });
+
+};
+
+const updateOrderStatus = (req, res) => {
+
+    const orderId = req.params.id;
+    const { orderStatus } = req.body;
+
+    const allowedStatuses = [
+        "Placed",
+        "Processing",
+        "Shipped",
+        "Delivered",
+        "Cancelled"
+    ];
+
+    if (!allowedStatuses.includes(orderStatus)) {
+
+        return res.status(400).send(
+            "Invalid order status"
+        );
+
+    }
+
+    Order.findByIdAndUpdate(
+        orderId,
+        {
+            orderStatus: orderStatus
+        },
+        { new: true }
+    )
+        .then((order) => {
+
+            if (!order) {
+
+                return res.status(404).send(
+                    "Order not found"
+                );
+
+            }
+
+            res.redirect(
+                `/admin/orders/${order._id}`
+            );
+
+        })
+        .catch((error) => {
+
+            console.log(error);
+
+            res.status(500).send(
+                "Failed to update order status"
+            );
+
+        });
+
+};
+
 module.exports = {
     getCheckout,
     placeOrder,
     getOrderSuccess,
-    getMyOrders
+    getMyOrders,
+    getAllOrders,
+    getAdminOrderDetails,
+    updateOrderStatus
 };

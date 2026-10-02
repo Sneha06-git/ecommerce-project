@@ -1,0 +1,356 @@
+<%- include("../partials/header", { title: "Order Details | E-Commerce" }) %>
+
+<body>
+
+    <div class="container py-5">
+
+        <!-- HEADER -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h1>Order Details</h1>
+
+                <p class="text-muted mb-0">
+                    Order #<%= order._id %>
+                </p>
+
+            </div>
+
+
+            <a
+                href="/admin/orders"
+                class="btn btn-dark"
+            >
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Orders
+
+            </a>
+
+        </div>
+
+
+        <!-- CUSTOMER DETAILS -->
+
+        <div class="card admin-detail-card mb-4">
+
+            <div class="card-body">
+
+                <h4 class="mb-4">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Customer Details
+
+                </h4>
+
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>Name</strong>
+
+                        <p class="mb-0">
+                            <%= order.customerDetails.name %>
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>Phone</strong>
+
+                        <p class="mb-0">
+                            <%= order.customerDetails.phone %>
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>Email</strong>
+
+                        <p class="mb-0">
+
+                            <%= order.user
+                                ? order.user.email
+                                : "N/A" %>
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <strong>Delivery Address</strong>
+
+                        <p class="mb-0">
+                            <%= order.customerDetails.address %>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER PRODUCTS -->
+
+        <div class="card admin-detail-card mb-4">
+
+            <div class="card-body">
+
+                <h4 class="mb-4">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    Ordered Products
+
+                </h4>
+
+
+                <% order.products.forEach((item) => { %>
+
+                    <div class="order-product-row">
+
+                        <div>
+
+                            <strong>
+                                <%= item.name %>
+                            </strong>
+
+                            <p class="text-muted mb-0">
+
+                                ₹<%= item.price %>
+
+                                ×
+
+                                <%= item.quantity %>
+
+                            </p>
+
+                        </div>
+
+
+                        <strong>
+
+                            ₹<%= item.price * item.quantity %>
+
+                        </strong>
+
+                    </div>
+
+                <% }) %>
+
+
+                <hr>
+
+
+                <div class="d-flex justify-content-between">
+
+                    <h5>
+                        Total Amount
+                    </h5>
+
+                    <h5>
+                        ₹<%= order.totalAmount %>
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENT & ORDER INFORMATION -->
+
+        <div class="card admin-detail-card">
+
+            <div class="card-body">
+
+                <h4 class="mb-4">
+
+                    <i class="fa-solid fa-credit-card"></i>
+
+                    Payment & Order Information
+
+                </h4>
+
+
+                <div class="row">
+
+                    <!-- PAYMENT METHOD -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>
+                            Payment Method
+                        </strong>
+
+                        <p class="mb-0">
+                            <%= order.paymentMethod %>
+                        </p>
+
+                    </div>
+
+
+                    <!-- PAYMENT STATUS -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>
+                            Payment Status
+                        </strong>
+
+                        <p class="mb-0">
+
+                            <% if (order.paymentStatus === "Paid") { %>
+
+                                <span class="badge bg-success">
+                                    Paid
+                                </span>
+
+                            <% } else if (order.paymentStatus === "Failed") { %>
+
+                                <span class="badge bg-danger">
+                                    Failed
+                                </span>
+
+                            <% } else { %>
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                            <% } %>
+
+                        </p>
+
+                    </div>
+
+
+                    <!-- ORDER DATE -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>
+                            Order Date
+                        </strong>
+
+                        <p class="mb-0">
+
+                            <%= new Date(
+                                order.createdAt
+                            ).toLocaleDateString() %>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <hr>
+
+
+                <!-- UPDATE ORDER STATUS -->
+
+                <div class="mt-4">
+
+                    <h5 class="mb-3">
+
+                        <i class="fa-solid fa-pen-to-square"></i>
+
+                        Update Order Status
+
+                    </h5>
+
+
+                    <form
+                        action="/admin/orders/<%= order._id %>/status"
+                        method="POST"
+                        class="d-flex gap-2"
+                    >
+
+                        <select
+                            name="orderStatus"
+                            class="form-select"
+                        >
+
+                            <option
+                                value="Placed"
+                                <%= order.orderStatus === "Placed" ? "selected" : "" %>
+                            >
+                                Placed
+                            </option>
+
+
+                            <option
+                                value="Processing"
+                                <%= order.orderStatus === "Processing" ? "selected" : "" %>
+                            >
+                                Processing
+                            </option>
+
+
+                            <option
+                                value="Shipped"
+                                <%= order.orderStatus === "Shipped" ? "selected" : "" %>
+                            >
+                                Shipped
+                            </option>
+
+
+                            <option
+                                value="Delivered"
+                                <%= order.orderStatus === "Delivered" ? "selected" : "" %>
+                            >
+                                Delivered
+                            </option>
+
+
+                            <option
+                                value="Cancelled"
+                                <%= order.orderStatus === "Cancelled" ? "selected" : "" %>
+                            >
+                                Cancelled
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Update
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

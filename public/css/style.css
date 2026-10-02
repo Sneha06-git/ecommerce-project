@@ -239,3 +239,56 @@ body {
 .order-card .card-body {
     padding: 24px;
 }
+
+.admin-orders-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.admin-orders-card .table {
+    margin-bottom: 0;
+}
+
+.admin-orders-card th,
+.admin-orders-card td {
+    padding: 16px;
+    white-space: nowrap;
+}
+
+.admin-detail-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.admin-detail-card .card-body {
+    padding: 28px;
+}
+
+.order-product-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-product-row:last-child {
+    border-bottom: none;
+}
+
+.admin-customers-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.admin-customers-card th,
+.admin-customers-card td {
+    padding: 16px;
+    white-space: nowrap;
+}
+
