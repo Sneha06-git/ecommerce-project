@@ -4,29 +4,226 @@
 
     <%- include("../partials/navbar") %>
 
-    <div class="container py-5">
 
-    <div class="text-center">
+    <!-- =========================
+         DASHBOARD HERO SECTION
+    ========================= -->
 
-        <h1>
-            Welcome, <%= userName %> 👋
-        </h1>
+    <section class="dashboard-hero">
 
-        <p class="lead mt-3">
-            Discover our products and find something you love.
-        </p>
+        <div class="container">
 
-        <a
-            href="/products"
-            class="btn btn-primary mt-3"
-        >
-            <i class="fa-solid fa-store"></i>
-            Browse Products
-        </a>
+            <div class="row align-items-center">
 
-    </div>
+                <!-- LEFT CONTENT -->
 
-</div>
+                <div class="col-lg-7">
+
+                    <span class="dashboard-badge">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Welcome to our store
+                    </span>
+
+                    <h1 class="dashboard-title">
+                        Welcome, <%= userName %> 👋
+                    </h1>
+
+                    <p class="dashboard-description">
+                        Discover amazing products, explore our collection
+                        and find something you'll love.
+                    </p>
+
+                    <div class="dashboard-buttons">
+
+                        <a
+                            href="/products"
+                            class="btn dashboard-primary-btn"
+                        >
+                            <i class="fa-solid fa-store"></i>
+                            Browse Products
+                        </a>
+
+                        <a
+                            href="/orders"
+                            class="btn dashboard-secondary-btn"
+                        >
+                            <i class="fa-solid fa-box"></i>
+                            My Orders
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT VISUAL -->
+
+                <div class="col-lg-5">
+
+                    <div class="dashboard-visual">
+
+                        <div class="dashboard-icon-circle">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                        <h3>
+                            Shop with ease
+                        </h3>
+
+                        <p>
+                            Browse products, add them to your cart
+                            and place your COD order easily.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DASHBOARD QUICK ACTIONS
+    ========================= -->
+
+    <section class="dashboard-actions">
+
+        <div class="container">
+
+            <div class="text-center mb-4">
+
+                <h2 class="dashboard-section-title">
+                    What would you like to do?
+                </h2>
+
+                <p class="dashboard-section-text">
+                    Quickly access the most useful sections.
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- PRODUCTS -->
+
+                <div class="col-md-4">
+
+                    <a
+                        href="/products"
+                        class="dashboard-action-link"
+                    >
+
+                        <div class="dashboard-action-card">
+
+                            <div class="dashboard-action-icon">
+                                <i class="fa-solid fa-store"></i>
+                            </div>
+
+                            <h4>
+                                Browse Products
+                            </h4>
+
+                            <p>
+                                Explore our available products
+                                and find something you like.
+                            </p>
+
+                            <span class="dashboard-action-arrow">
+                                Explore
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- CART -->
+
+                <div class="col-md-4">
+
+                    <a
+                        href="/cart"
+                        class="dashboard-action-link"
+                    >
+
+                        <div class="dashboard-action-card">
+
+                            <div class="dashboard-action-icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+
+                            <h4>
+                                My Cart
+                            </h4>
+
+                            <p>
+                                View your selected products
+                                and proceed to checkout.
+                            </p>
+
+                            <span class="dashboard-action-arrow">
+                                View Cart
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- ORDERS -->
+
+                <div class="col-md-4">
+
+                    <a
+                        href="/orders"
+                        class="dashboard-action-link"
+                    >
+
+                        <div class="dashboard-action-card">
+
+                            <div class="dashboard-action-icon">
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+
+                            <h4>
+                                My Orders
+                            </h4>
+
+                            <p>
+                                Track your previous orders
+                                and view order details.
+                            </p>
+
+                            <span class="dashboard-action-arrow">
+                                View Orders
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
 
 </body>
+
 </html>
