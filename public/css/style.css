@@ -197,3 +197,45 @@ body {
 .product-listing-button {
     margin-top: 12px;
 }
+
+/* CHECKOUT */
+
+.checkout-card,
+.checkout-summary {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-card .card-body,
+.checkout-summary .card-body {
+    padding: 28px;
+}
+
+/* ORDER SUCCESS */
+
+.order-success-card {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 50px 30px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+.order-success-icon {
+    font-size: 70px;
+    color: #198754;
+}
+
+/* MY ORDERS */
+
+.order-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.order-card .card-body {
+    padding: 24px;
+}

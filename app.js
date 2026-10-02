@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const cartMiddleware = require("./middleware/cartMiddleware");
+
 dotenv.config();
 
 const app = express();
@@ -30,7 +31,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
-
 
 // SESSION
 
@@ -65,6 +65,11 @@ app.use("/products", productRoutes);
 //CART ROUTES
 const cartRoutes = require("./routes/cartRoutes");
 app.use("/cart", cartRoutes);
+
+//ORDER ROUTES
+
+const orderRoutes = require("./routes/orderRoutes");
+app.use("/orders", orderRoutes);
 
 // HOME PAGE
 app.get("/", (req, res) => {

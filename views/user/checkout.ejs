@@ -1,0 +1,204 @@
+<%- include("../partials/header", { title: "Checkout | E-Commerce" }) %>
+
+<body>
+
+    <%- include("../partials/navbar") %>
+
+    <div class="container py-5">
+
+        <h1 class="mb-4">Checkout</h1>
+
+        <div class="row g-4">
+
+            <!-- CUSTOMER DETAILS -->
+
+            <div class="col-lg-7">
+
+                <div class="card checkout-card">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-4">
+                            Delivery Details
+                        </h4>
+
+                        <form
+                            action="/orders/place"
+                            method="POST"
+                        >
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="name"
+                                    class="form-label"
+                                >
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    class="form-control"
+                                    value="<%= user.name %>"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="phone"
+                                    class="form-label"
+                                >
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    class="form-control"
+                                    value="<%= user.phone %>"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="mb-4">
+
+                                <label
+                                    for="address"
+                                    class="form-label"
+                                >
+                                    Delivery Address
+                                </label>
+
+                                <textarea
+                                    id="address"
+                                    name="address"
+                                    class="form-control"
+                                    rows="4"
+                                    required
+                                ><%= user.address %></textarea>
+
+                            </div>
+
+
+                            <h5 class="mb-3">
+                                Payment Method
+                            </h5>
+
+                            <div class="form-check mb-2">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="paymentMethod"
+                                    id="cod"
+                                    value="COD"
+                                    checked
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="cod"
+                                >
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    Cash on Delivery
+                                </label>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary w-100 mt-4"
+                            >
+                                <i class="fa-solid fa-check"></i>
+                                Place Order
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="col-lg-5">
+
+                <div class="card checkout-summary">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-4">
+                            Order Summary
+                        </h4>
+
+                        <% cart.products.forEach((item) => { %>
+
+                            <div
+                                class="d-flex justify-content-between mb-3"
+                            >
+
+                                <div>
+
+                                    <strong>
+                                        <%= item.product.name %>
+                                    </strong>
+
+                                    <div class="text-muted">
+                                        Qty: <%= item.quantity %>
+                                    </div>
+
+                                </div>
+
+                                <span>
+                                    ₹<%= item.product.price * item.quantity %>
+                                </span>
+
+                            </div>
+
+                        <% }) %>
+
+                        <hr>
+
+                        <div
+                            class="d-flex justify-content-between"
+                        >
+
+                            <strong>Total</strong>
+
+                            <strong>
+                                ₹<%= cart.products.reduce(
+                                    (total, item) =>
+                                        total +
+                                        item.product.price *
+                                        item.quantity,
+                                    0
+                                ) %>
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
