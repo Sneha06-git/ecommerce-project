@@ -1,180 +1,283 @@
-<%- include("../partials/header", { title: "Manage Orders | E-Commerce" }) %>
+<%- include("../partials/header", { title: "Manage Orders | Admin" }) %>
 
 <body>
 
-    <div class="container py-5">
-
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <div>
-                <h1>Manage Orders</h1>
-                <p class="text-muted mb-0">
-                    View and manage customer orders.
-                </p>
-            </div>
-
-            <a href="/admin/dashboard" class="btn btn-dark">
-                <i class="fa-solid fa-arrow-left"></i>
-                Dashboard
-            </a>
-
-        </div>
-
-
-        <% if (orders.length === 0) { %>
-
-            <div class="alert alert-info">
-                No orders have been placed yet.
-            </div>
-
-        <% } else { %>
-
-
-            <div class="card admin-orders-card">
-
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle mb-0">
-
-                        <thead class="table-dark">
-
-                            <tr>
-
-                                <th>Order ID</th>
-
-                                <th>Customer</th>
-
-                                <th>Phone</th>
-
-                                <th>Total</th>
-
-                                <th>Payment</th>
-
-                                <th>Payment Status</th>
-
-                                <th>Order Status</th>
-
-                                <th>Date</th>
-
-                                <th>Action</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            <% orders.forEach((order) => { %>
-
-                                <tr>
-
-                                    <td>
-                                        <small>
-                                            <%= order._id %>
-                                        </small>
-                                    </td>
-
-
-                                    <td>
-
-                                        <strong>
-                                            <%= order.customerDetails.name %>
-                                        </strong>
-
-                                    </td>
-
-
-                                    <td>
-                                        <%= order.customerDetails.phone %>
-                                    </td>
-
-
-                                    <td>
-                                        ₹<%= order.totalAmount %>
-                                    </td>
-
-
-                                    <td>
-                                        <%= order.paymentMethod %>
-                                    </td>
-
-
-                                    <td>
-
-                                        <% if (order.paymentStatus === "Paid") { %>
-
-                                            <span class="badge bg-success">
-                                                Paid
-                                            </span>
-
-                                        <% } else if (order.paymentStatus === "Failed") { %>
-
-                                            <span class="badge bg-danger">
-                                                Failed
-                                            </span>
-
-                                        <% } else { %>
-
-                                            <span class="badge bg-warning text-dark">
-                                                Pending
-                                            </span>
-
-                                        <% } %>
-
-                                    </td>
-
-
-                                    <td>
-
-                                        <span class="badge bg-primary">
-                                            <%= order.orderStatus %>
-                                        </span>
-
-                                    </td>
-
-
-                                    <td>
-
-                                        <%= new Date(
-                                            order.createdAt
-                                        ).toLocaleDateString() %>
-
-                                    </td>
-
-
-                                    <td>
-
-                                        <a
-                                            href="/admin/orders/<%= order._id %>"
-                                            class="btn btn-sm btn-primary"
-                                        >
-
-                                            <i class="fa-solid fa-eye"></i>
-
-                                            View
-
-                                        </a>
-
-                                    </td>
-
-                                </tr>
-
-                            <% }) %>
-
-                        </tbody>
-
-                    </table>
-
+    <!-- =========================
+         ADMIN NAVBAR
+    ========================= -->
+    <nav class="admin-navbar">
+        <div class="container">
+            <div class="admin-navbar-content">
+
+                <a href="/admin/dashboard" class="admin-brand">
+                    <i class="fa-solid fa-store"></i>
+                    E-Commerce Admin
+                </a>
+
+                <div class="admin-nav-actions">
+                    <a href="/admin/dashboard" class="admin-back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="/auth/logout" class="admin-logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
                 </div>
 
             </div>
+        </div>
+    </nav>
 
+    <!-- =========================
+         ORDERS HERO
+    ========================= -->
+    <section class="admin-page-hero">
+        <div class="container">
 
-        <% } %>
+            <div class="admin-page-heading">
 
-    </div>
+                <span class="admin-page-badge">
+                    <i class="fa-solid fa-truck"></i>
+                    Order Management
+                </span>
+
+                <h1>Manage Orders</h1>
+
+                <p>
+                    View customer orders and manage their
+                    current status.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         ORDERS CONTENT
+    ========================= -->
+    <section class="admin-orders-content">
+        <div class="container">
+
+            <% if (orders.length === 0) { %>
+
+                <!-- =========================
+                     EMPTY ORDERS
+                ========================= -->
+                <div class="admin-orders-empty">
+
+                    <div class="admin-orders-empty-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+
+                    <h3>No Orders Yet</h3>
+
+                    <p>
+                        No customer orders have been placed yet.
+                    </p>
+
+                </div>
+
+            <% } else { %>
+
+                <!-- =========================
+                     ORDERS HEADER
+                ========================= -->
+                <div class="admin-orders-topbar">
+
+                    <div>
+                        <h2>Customer Orders</h2>
+                        <p>
+                            <%= orders.length %> order(s) placed
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- =========================
+                     ORDERS TABLE
+                ========================= -->
+                <div class="admin-orders-card">
+
+                    <div class="table-responsive">
+
+                        <table class="admin-orders-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <th>Total</th>
+                                    <th>Payment</th>
+                                    <th>Payment Status</th>
+                                    <th>Order Status</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <% orders.forEach((order) => { %>
+
+                                    <tr>
+
+                                        <!-- ORDER -->
+                                        <td>
+                                            <div class="admin-order-id">
+                                                <i class="fa-solid fa-receipt"></i>
+                                                <span>
+                                                    #<%= order._id.toString().slice(-8) %>
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        <!-- CUSTOMER -->
+                                        <td>
+                                            <div class="admin-order-customer">
+                                                <div class="admin-order-customer-avatar">
+                                                    <i class="fa-solid fa-user"></i>
+                                                </div>
+
+                                                <strong>
+                                                    <%= order.customerDetails.name %>
+                                                </strong>
+                                            </div>
+                                        </td>
+
+                                        <!-- PHONE -->
+                                        <td>
+                                            <span class="admin-order-phone">
+                                                <i class="fa-solid fa-phone"></i>
+                                                <%= order.customerDetails.phone %>
+                                            </span>
+                                        </td>
+
+                                        <!-- TOTAL -->
+                                        <td>
+                                            <strong class="admin-order-total">
+                                                ₹<%= order.totalAmount %>
+                                            </strong>
+                                        </td>
+
+                                        <!-- PAYMENT -->
+                                        <td>
+                                            <span class="admin-payment-method">
+                                                <i class="fa-solid fa-money-bill-wave"></i>
+                                                <%= order.paymentMethod %>
+                                            </span>
+                                        </td>
+
+                                        <!-- PAYMENT STATUS -->
+                                        <td>
+
+                                            <% if (order.paymentStatus === "Paid") { %>
+
+                                                <span class="admin-status-badge payment-paid">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Paid
+                                                </span>
+
+                                            <% } else if (order.paymentStatus === "Failed") { %>
+
+                                                <span class="admin-status-badge payment-failed">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    Failed
+                                                </span>
+
+                                            <% } else { %>
+
+                                                <span class="admin-status-badge payment-pending">
+                                                    <i class="fa-solid fa-clock"></i>
+                                                    Pending
+                                                </span>
+
+                                            <% } %>
+
+                                        </td>
+
+                                        <!-- ORDER STATUS -->
+                                        <td>
+
+                                            <% if (order.orderStatus === "Delivered") { %>
+
+                                                <span class="admin-status-badge order-delivered">
+                                                    <i class="fa-solid fa-circle-check"></i>
+                                                    Delivered
+                                                </span>
+
+                                            <% } else if (order.orderStatus === "Shipped") { %>
+
+                                                <span class="admin-status-badge order-shipped">
+                                                    <i class="fa-solid fa-truck"></i>
+                                                    Shipped
+                                                </span>
+
+                                            <% } else if (order.orderStatus === "Processing") { %>
+
+                                                <span class="admin-status-badge order-processing">
+                                                    <i class="fa-solid fa-gear"></i>
+                                                    Processing
+                                                </span>
+
+                                            <% } else if (order.orderStatus === "Cancelled") { %>
+
+                                                <span class="admin-status-badge order-cancelled">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    Cancelled
+                                                </span>
+
+                                            <% } else { %>
+
+                                                <span class="admin-status-badge order-placed">
+                                                    <i class="fa-solid fa-box"></i>
+                                                    Placed
+                                                </span>
+
+                                            <% } %>
+
+                                        </td>
+
+                                        <!-- DATE -->
+                                        <td>
+                                            <span class="admin-order-date">
+                                                <i class="fa-regular fa-calendar"></i>
+                                                <%= new Date(
+                                                    order.createdAt
+                                                ).toLocaleDateString() %>
+                                            </span>
+                                        </td>
+
+                                        <!-- ACTION -->
+                                        <td>
+                                            <a
+                                                href="/admin/orders/<%= order._id %>"
+                                                class="admin-view-order-btn"
+                                            >
+                                                <i class="fa-solid fa-eye"></i>
+                                                View
+                                            </a>
+                                        </td>
+
+                                    </tr>
+
+                                <% }) %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+        </div>
+    </section>
 
 </body>
-
 </html>

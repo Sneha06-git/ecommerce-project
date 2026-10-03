@@ -492,6 +492,28 @@ const updateOrderStatus = (req, res) => {
 
 };
 
+const getOrderDetails = (req, res) => {
+    const userId = req.session.userId;
+    const orderId = req.params.id;
+
+    Order.findOne({
+        _id: orderId,
+        user: userId
+    })
+        .then((order) => {
+            if (!order) {
+                return res.status(404).send("Order not found");
+            }
+
+            res.render("user/order-details", {
+                order
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).send("Failed to load order details");
+        });
+};
 
 module.exports = {
 
@@ -499,6 +521,7 @@ module.exports = {
     placeOrder,
     getOrderSuccess,
     getMyOrders,
+    getOrderDetails,
     getAllOrders,
     getAdminOrderDetails,
     updateOrderStatus

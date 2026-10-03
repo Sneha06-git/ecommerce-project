@@ -1,116 +1,202 @@
 <%- include("../partials/header", { title: "My Orders | E-Commerce" }) %>
 
 <body>
-
     <%- include("../partials/navbar") %>
 
-    <div class="container py-5">
+    <!-- =========================
+         MY ORDERS PAGE HERO
+    ========================= -->
+    <section class="orders-page-hero">
+        <div class="container">
+            <div class="orders-page-heading">
+                <span class="orders-page-badge">
+                    <i class="fa-solid fa-box-open"></i>
+                    Your Orders
+                </span>
 
-        <h1 class="mb-4">My Orders</h1>
+                <h1>My Orders</h1>
 
-        <% if (orders.length === 0) { %>
-
-            <div class="alert alert-info">
-                You haven't placed any orders yet.
+                <p>
+                    View your orders, products, payment details
+                    and current order status.
+                </p>
             </div>
+        </div>
+    </section>
 
-            <a
-                href="/products"
-                class="btn btn-primary"
-            >
-                Start Shopping
-            </a>
+    <!-- =========================
+         MY ORDERS PAGE CONTENT
+    ========================= -->
+    <section class="orders-page-content">
+        <div class="container">
 
-        <% } else { %>
+            <% if (orders.length === 0) { %>
 
-            <% orders.forEach((order) => { %>
+                <!-- =========================
+                     EMPTY ORDERS
+                ========================= -->
+                <div class="orders-empty-state">
 
-                <div class="card order-card mb-4">
+                    <div class="orders-empty-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
 
-                    <div class="card-body">
+                    <h2>No Orders Yet</h2>
 
-                        <div class="d-flex justify-content-between
-                                    align-items-center mb-3">
+                    <p>
+                        You haven't placed any orders yet.
+                        Start shopping and your orders will appear here.
+                    </p>
 
-                            <div>
+                    <a href="/products" class="orders-start-shopping-btn">
+                        <i class="fa-solid fa-store"></i>
+                        Start Shopping
+                    </a>
 
-                                <h5 class="mb-1">
-                                    Order #<%= order._id %>
-                                </h5>
+                </div>
 
-                                <small class="text-muted">
-                                    <%= new Date(
-                                        order.createdAt
-                                    ).toLocaleDateString() %>
-                                </small>
+            <% } else { %>
 
-                            </div>
+                <!-- =========================
+                     ORDERS LIST
+                ========================= -->
+                <div class="orders-list">
 
-                            <span class="badge bg-success">
-                                <%= order.orderStatus %>
-                            </span>
+                    <% orders.forEach((order) => { %>
 
-                        </div>
+                        <div class="order-card">
 
-                        <hr>
+                            <!-- =========================
+                                 ORDER HEADER
+                            ========================= -->
+                            <div class="order-card-header">
 
-                        <% order.products.forEach((item) => { %>
+                                <div class="order-header-left">
 
-                            <div class="d-flex justify-content-between mb-2">
+                                    <div class="order-icon">
+                                        <i class="fa-solid fa-box"></i>
+                                    </div>
 
-                                <div>
+                                    <div>
+                                        <span class="order-label">
+                                            Order ID
+                                        </span>
 
-                                    <strong>
-                                        <%= item.name %>
-                                    </strong>
+                                        <h2>
+                                            #<%= order._id %>
+                                        </h2>
 
-                                    <span class="text-muted">
-                                        × <%= item.quantity %>
-                                    </span>
+                                        <span class="order-date">
+                                            <i class="fa-regular fa-calendar"></i>
+                                            <%= new Date(
+                                                order.createdAt
+                                            ).toLocaleDateString() %>
+                                        </span>
+                                    </div>
 
                                 </div>
 
-                                <span>
-                                    ₹<%= item.price * item.quantity %>
+                                <span class="order-status-badge">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <%= order.orderStatus %>
                                 </span>
 
                             </div>
 
-                        <% }) %>
+                            <!-- =========================
+                                 ORDER PRODUCTS
+                            ========================= -->
+                            <div class="order-products">
 
-                        <hr>
+                                <% order.products.forEach((item) => { %>
 
-                        <div class="d-flex justify-content-between">
+                                    <div class="order-product-item">
 
-                            <strong>Total</strong>
+                                        <div class="order-product-info">
 
-                            <strong>
-                                ₹<%= order.totalAmount %>
-                            </strong>
+                                            <div class="order-product-icon">
+                                                <i class="fa-solid fa-bag-shopping"></i>
+                                            </div>
+
+                                            <div>
+                                                <strong>
+                                                    <%= item.name %>
+                                                </strong>
+
+                                                <span>
+                                                    Quantity:
+                                                    <%= item.quantity %>
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                        <strong class="order-product-price">
+                                            ₹<%= item.price * item.quantity %>
+                                        </strong>
+
+                                    </div>
+
+                                <% }) %>
+
+                            </div>
+
+                            <!-- =========================
+                                 ORDER FOOTER
+                            ========================= -->
+                            <div class="order-card-footer">
+
+                                <div class="order-payment-info">
+
+                                    <span>
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Payment
+                                    </span>
+
+                                    <strong>
+                                        <%= order.paymentMethod %>
+                                    </strong>
+
+                                </div>
+
+                                <div class="order-total-info">
+
+                                    <span>Total</span>
+
+                                    <strong>
+                                        ₹<%= order.totalAmount %>
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <!-- =========================
+                                 VIEW ORDER DETAILS
+                            ========================= -->
+                            <div class="order-card-action">
+
+                                <a
+                                    href="/orders/<%= order._id %>"
+                                    class="order-view-btn"
+                                >
+                                    View Order Details
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+
+                            </div>
 
                         </div>
 
-                        <div class="mt-3">
-
-                            <span class="text-muted">
-                                Payment:
-                            </span>
-
-                            <strong>
-                                <%= order.paymentMethod %>
-                            </strong>
-
-                        </div>
-
-                    </div>
+                    <% }) %>
 
                 </div>
 
-            <% }) %>
+            <% } %>
 
-        <% } %>
-
-    </div>
+        </div>
+    </section>
+  <%- include("../partials/footer") %>
 
 </body>
 </html>

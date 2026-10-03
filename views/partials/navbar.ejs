@@ -1,35 +1,163 @@
 <nav class="navbar navbar-expand-lg ecommerce-navbar">
+
     <div class="container">
 
         <!-- =========================
              BRAND
         ========================= -->
-        <a class="navbar-brand ecommerce-brand" href="/auth/dashboard">
+        <a class="navbar-brand ecommerce-brand" href="/">
             <i class="fa-solid fa-bag-shopping"></i>
             E-Commerce
         </a>
 
         <!-- =========================
-             NAVBAR ACTIONS
+             MOBILE TOGGLE
         ========================= -->
-        <div class="d-flex align-items-center gap-3">
+        <button
+            class="navbar-toggler ecommerce-navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#ecommerceNavbar"
+            aria-controls="ecommerceNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-            <!-- Cart -->
-            <a href="/cart" class="cart-link">
-                <i class="fa-solid fa-cart-shopping"></i>
+        <!-- =========================
+             NAVIGATION
+        ========================= -->
+        <div
+            class="collapse navbar-collapse"
+            id="ecommerceNavbar"
+        >
 
-                <span class="cart-badge">
-                    <%= cartItemCount || 0 %>
-                </span>
-            </a>
+            <ul class="navbar-nav mx-auto ecommerce-nav-links">
 
-            <!-- Logout -->
-            <a href="/auth/logout" class="navbar-logout-btn">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Logout
-            </a>
+                <!-- HOME -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="/"
+                    >
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
+                <!-- PRODUCTS -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="/products"
+                    >
+                        <i class="fa-solid fa-store"></i>
+                        Products
+                    </a>
+                </li>
+
+                <% if (userId) { %>
+
+                    <!-- MY ORDERS -->
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="/orders"
+                        >
+                            <i class="fa-solid fa-box"></i>
+                            My Orders
+                        </a>
+                    </li>
+
+                <% } %>
+
+            </ul>
+
+            <!-- =========================
+                 NAVBAR ACTIONS
+            ========================= -->
+            <div class="ecommerce-navbar-actions">
+
+                <!-- CART -->
+                <a
+                    href="/cart"
+                    class="ecommerce-cart-link"
+                    title="Shopping Cart"
+                >
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    <span class="ecommerce-cart-badge">
+                        <%= cartItemCount || 0 %>
+                    </span>
+                </a>
+
+                <% if (!userId) { %>
+
+                    <!-- LOGIN -->
+                    <a
+                        href="/auth/login"
+                        class="ecommerce-login-btn"
+                    >
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Login
+                    </a>
+
+                    <!-- REGISTER -->
+                    <a
+                        href="/auth/register"
+                        class="ecommerce-register-btn"
+                    >
+                        Register
+                    </a>
+
+                <% } else { %>
+
+                    <!-- USER -->
+                    <div class="ecommerce-user-info">
+                        <% if (typeof userName !== "undefined" && userName) { %>
+
+    <% if (typeof userRole !== "undefined" && userRole === "admin") { %>
+
+        <a href="/admin/dashboard" class="navbar-user-link">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Hi, <%= userName %></span>
+        </a>
+
+    <% } else { %>
+
+        <a href="/auth/dashboard" class="navbar-user-link">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Hi, <%= userName %></span>
+        </a>
+
+    <% } %>
+
+<% } else { %>
+
+    <a href="/auth/login" class="navbar-user-link">
+        <i class="fa-solid fa-circle-user"></i>
+        <span>Login / Register</span>
+    </a>
+
+<% } %>
+                    </div>
+
+                    <!-- LOGOUT -->
+                    <a
+                        href="/auth/logout"
+                        class="ecommerce-logout-btn"
+                    >
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+
+                <% } %>
+
+            </div>
 
         </div>
 
     </div>
+
 </nav>

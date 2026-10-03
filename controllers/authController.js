@@ -212,14 +212,14 @@ const logoutUser = (req, res) => {
             console.log(error);
 
             return res.redirect(
-                "/auth/login?error=Logout%20failed"
+                "/?error=Logout%20failed"
             );
 
         }
 
 
         res.redirect(
-            "/auth/login?message=Logout%20successful"
+            "/?message=Logout%20successful"
         );
 
     });

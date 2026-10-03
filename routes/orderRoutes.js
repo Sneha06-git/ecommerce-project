@@ -7,7 +7,8 @@ const {
     getCheckout,
     placeOrder,
     getOrderSuccess,
-    getMyOrders
+    getMyOrders,
+    getOrderDetails
 } = require("../controllers/orderController");
 
 router.get(
@@ -34,5 +35,7 @@ router.get(
     authMiddleware,
     getOrderSuccess
 );
+
+router.get("/:id", authMiddleware, getOrderDetails);
 
 module.exports = router;

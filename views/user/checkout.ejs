@@ -1,193 +1,281 @@
 <%- include("../partials/header", { title: "Checkout | E-Commerce" }) %>
 
 <body>
-
     <%- include("../partials/navbar") %>
 
-    <div class="container py-5">
+    <!-- =========================
+         CHECKOUT PAGE HERO
+    ========================= -->
+    <section class="checkout-page-hero">
+        <div class="container">
+            <div class="checkout-page-heading">
+                <span class="checkout-page-badge">
+                    <i class="fa-solid fa-lock"></i>
+                    Secure Checkout
+                </span>
 
-        <h1 class="mb-4">Checkout</h1>
+                <h1>Complete Your Order</h1>
 
-        <div class="row g-4">
+                <p>
+                    Enter your delivery details and review your order
+                    before placing it.
+                </p>
+            </div>
+        </div>
+    </section>
 
-            <!-- CUSTOMER DETAILS -->
+    <!-- =========================
+         CHECKOUT PAGE CONTENT
+    ========================= -->
+    <section class="checkout-page-content">
+        <div class="container">
 
-            <div class="col-lg-7">
+            <div class="row g-4">
 
-                <div class="card checkout-card">
+                <!-- =========================
+                     CUSTOMER DETAILS
+                ========================= -->
+                <div class="col-lg-7">
 
-                    <div class="card-body">
+                    <div class="checkout-card">
 
-                        <h4 class="mb-4">
-                            Delivery Details
-                        </h4>
-
-                        <form
-                            action="/orders/place"
-                            method="POST"
-                        >
-
-                            <div class="mb-3">
-
-                                <label
-                                    for="name"
-                                    class="form-label"
-                                >
-                                    Full Name
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    class="form-control"
-                                    value="<%= user.name %>"
-                                    required
-                                >
-
+                        <div class="checkout-card-header">
+                            <div class="checkout-header-icon">
+                                <i class="fa-solid fa-location-dot"></i>
                             </div>
 
-
-                            <div class="mb-3">
-
-                                <label
-                                    for="phone"
-                                    class="form-label"
-                                >
-                                    Phone Number
-                                </label>
-
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    name="phone"
-                                    class="form-control"
-                                    value="<%= user.phone %>"
-                                    required
-                                >
-
+                            <div>
+                                <h2>Delivery Details</h2>
+                                <p>Where should we deliver your order?</p>
                             </div>
+                        </div>
 
+                        <div class="checkout-card-body">
 
-                            <div class="mb-4">
-
-                                <label
-                                    for="address"
-                                    class="form-label"
-                                >
-                                    Delivery Address
-                                </label>
-
-                                <textarea
-                                    id="address"
-                                    name="address"
-                                    class="form-control"
-                                    rows="4"
-                                    required
-                                ><%= user.address %></textarea>
-
-                            </div>
-
-
-                            <h5 class="mb-3">
-                                Payment Method
-                            </h5>
-
-                            <div class="form-check mb-2">
-
-                                <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="paymentMethod"
-                                    id="cod"
-                                    value="COD"
-                                    checked
-                                >
-
-                                <label
-                                    class="form-check-label"
-                                    for="cod"
-                                >
-                                    <i class="fa-solid fa-money-bill-wave"></i>
-                                    Cash on Delivery
-                                </label>
-
-                            </div>
-
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary w-100 mt-4"
+                            <form
+                                action="/orders/place"
+                                method="POST"
                             >
-                                <i class="fa-solid fa-check"></i>
-                                Place Order
-                            </button>
 
-                        </form>
+                                <!-- Full Name -->
+                                <div class="checkout-form-group">
+                                    <label
+                                        for="name"
+                                        class="checkout-form-label"
+                                    >
+                                        Full Name
+                                    </label>
 
+                                    <div class="checkout-input-wrapper">
+                                        <i class="fa-solid fa-user"></i>
+
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            name="name"
+                                            class="checkout-form-input"
+                                            value="<%= user.name %>"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="checkout-form-group">
+                                    <label
+                                        for="phone"
+                                        class="checkout-form-label"
+                                    >
+                                        Phone Number
+                                    </label>
+
+                                    <div class="checkout-input-wrapper">
+                                        <i class="fa-solid fa-phone"></i>
+
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            class="checkout-form-input"
+                                            value="<%= user.phone %>"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                                <!-- Delivery Address -->
+                                <div class="checkout-form-group">
+                                    <label
+                                        for="address"
+                                        class="checkout-form-label"
+                                    >
+                                        Delivery Address
+                                    </label>
+
+                                    <div class="checkout-textarea-wrapper">
+                                        <i class="fa-solid fa-location-dot"></i>
+
+                                        <textarea
+                                            id="address"
+                                            name="address"
+                                            class="checkout-form-textarea"
+                                            rows="4"
+                                            required
+                                        ><%= user.address %></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- =========================
+                                     PAYMENT METHOD
+                                ========================= -->
+                                <div class="checkout-payment-section">
+
+                                    <div class="checkout-section-title">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                        <span>Payment Method</span>
+                                    </div>
+
+                                    <label
+                                        for="cod"
+                                        class="checkout-payment-option"
+                                    >
+                                        <input
+                                            class="checkout-payment-radio"
+                                            type="radio"
+                                            name="paymentMethod"
+                                            id="cod"
+                                            value="COD"
+                                            checked
+                                        >
+
+                                        <span class="checkout-payment-icon">
+                                            <i class="fa-solid fa-money-bill-wave"></i>
+                                        </span>
+
+                                        <span class="checkout-payment-content">
+                                            <strong>Cash on Delivery</strong>
+                                            <small>
+                                                Pay when your order arrives
+                                            </small>
+                                        </span>
+
+                                        <span class="checkout-payment-check">
+                                            <i class="fa-solid fa-check"></i>
+                                        </span>
+                                    </label>
+
+                                </div>
+
+                                <!-- Place Order -->
+                                <button
+                                    type="submit"
+                                    class="checkout-place-order-btn"
+                                >
+                                    <i class="fa-solid fa-check"></i>
+                                    Place Order
+                                </button>
+
+                            </form>
+
+                        </div>
                     </div>
 
                 </div>
 
-            </div>
+                <!-- =========================
+                     ORDER SUMMARY
+                ========================= -->
+                <div class="col-lg-5">
 
+                    <div class="checkout-summary">
 
-            <!-- ORDER SUMMARY -->
+                        <div class="checkout-summary-header">
+                            <span class="checkout-summary-icon">
+                                <i class="fa-solid fa-receipt"></i>
+                            </span>
 
-            <div class="col-lg-5">
+                            <div>
+                                <h2>Order Summary</h2>
+                                <p>Review your selected products</p>
+                            </div>
+                        </div>
 
-                <div class="card checkout-summary">
+                        <div class="checkout-summary-products">
 
-                    <div class="card-body">
+                            <% cart.products.forEach((item) => { %>
 
-                        <h4 class="mb-4">
-                            Order Summary
-                        </h4>
+                                <div class="checkout-summary-product">
 
-                        <% cart.products.forEach((item) => { %>
-
-                            <div
-                                class="d-flex justify-content-between mb-3"
-                            >
-
-                                <div>
-
-                                    <strong>
-                                        <%= item.product.name %>
-                                    </strong>
-
-                                    <div class="text-muted">
-                                        Qty: <%= item.quantity %>
+                                    <div class="checkout-summary-product-image">
+                                        <img
+                                            src="<%= item.product.image %>"
+                                            alt="<%= item.product.name %>"
+                                        >
                                     </div>
+
+                                    <div class="checkout-summary-product-info">
+                                        <strong>
+                                            <%= item.product.name %>
+                                        </strong>
+
+                                        <span>
+                                            Qty: <%= item.quantity %>
+                                        </span>
+                                    </div>
+
+                                    <strong class="checkout-summary-product-price">
+                                        ₹<%= item.product.price * item.quantity %>
+                                    </strong>
 
                                 </div>
 
-                                <span>
-                                    ₹<%= item.product.price * item.quantity %>
-                                </span>
+                            <% }) %>
 
-                            </div>
+                        </div>
 
-                        <% }) %>
+                        <div class="checkout-summary-divider"></div>
 
-                        <hr>
+                        <div class="checkout-summary-row">
+                            <span>Items</span>
 
-                        <div
-                            class="d-flex justify-content-between"
-                        >
+                            <span>
+                                <%= cart.products.reduce(
+                                    (total, item) =>
+                                        total + item.quantity,
+                                    0
+                                ) %>
+                            </span>
+                        </div>
 
-                            <strong>Total</strong>
+                        <div class="checkout-summary-row">
+                            <span>Delivery</span>
+
+                            <span class="checkout-free-delivery">
+                                FREE
+                            </span>
+                        </div>
+
+                        <div class="checkout-summary-divider"></div>
+
+                        <div class="checkout-summary-total">
+                            <span>Total</span>
 
                             <strong>
                                 ₹<%= cart.products.reduce(
                                     (total, item) =>
                                         total +
-                                        item.product.price *
-                                        item.quantity,
+                                        (item.product.price * item.quantity),
                                     0
                                 ) %>
                             </strong>
+                        </div>
 
+                        <div class="checkout-security-note">
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                            <span>
+                                Your order information is securely processed.
+                            </span>
                         </div>
 
                     </div>
@@ -197,8 +285,7 @@
             </div>
 
         </div>
-
-    </div>
-
+    </section>
+  <%- include("../partials/footer") %>
 </body>
 </html>

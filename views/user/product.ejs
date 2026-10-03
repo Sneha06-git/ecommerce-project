@@ -4,113 +4,253 @@
 
     <%- include("../partials/navbar") %>
 
-    <div class="container py-5">
+    <!-- =========================
+         PRODUCT DETAILS PAGE
+    ========================= -->
+    <section class="product-details-page">
 
-        <div class="row g-5">
+        <div class="container">
 
-            <!-- Product Image -->
-            <div class="col-md-6">
+            <!-- =========================
+                 BREADCRUMB
+            ========================= -->
+            <div class="product-breadcrumb">
 
-                <img
-                    src="<%= product.image %>"
-                    alt="<%= product.name %>"
-                    class="product-detail-image"
-                >
+                <a href="/products">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Products
+                </a>
 
             </div>
 
-            <!-- Product Information -->
-            <div class="col-md-6">
 
-                <h1 class="product-detail-title">
-                    <%= product.name %>
-                </h1>
+            <!-- =========================
+                 PRODUCT DETAILS CARD
+            ========================= -->
+            <div class="product-details-card">
 
-                <p class="product-detail-category">
-                    Category: <%= product.category %>
-                </p>
+                <div class="row g-0 align-items-stretch">
 
-                <h2 class="product-detail-price">
-                    ₹<%= product.price %>
-                </h2>
+                    <!-- =========================
+                         PRODUCT IMAGE
+                    ========================= -->
+                    <div class="col-lg-6">
 
-                <p class="product-detail-description">
-                    <%= product.description %>
-                </p>
+                        <div class="product-detail-image-wrapper">
 
-                <p>
-                    <strong>Available Stock:</strong>
+                            <img
+                                src="<%= product.image %>"
+                                alt="<%= product.name %>"
+                                class="product-detail-image"
+                            >
 
-                    <span id="availableStock">
-                    <%= product.stock - cartQuantity %>
-                    </span>
-                </p>
+                            <% if (product.stock > 0) { %>
 
-               <form id="addToCartForm">
+                                <span class="product-detail-stock-badge in-stock">
+                                    <i class="fa-solid fa-check"></i>
+                                    In Stock
+                                </span>
 
-    <input
-        type="hidden"
-        name="productId"
-        value="<%= product._id %>"
-    >
+                            <% } else { %>
 
-   <div class="quantity-selector">
+                                <span class="product-detail-stock-badge out-of-stock">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    Out of Stock
+                                </span>
 
-    <button
-        type="button"
-        id="decreaseQuantity"
-        class="quantity-btn"
-    >
-        −
-    </button>
+                            <% } %>
 
-    <input
-        type="number"
-        id="productQuantity"
-        name="quantity"
-        value="1"
-        min="1"
-        max="<%= product.stock - cartQuantity %>"
-        readonly
-    >
+                        </div>
 
-    <button
-        type="button"
-        id="increaseQuantity"
-        class="quantity-btn"
-    >
-        +
-    </button>
+                    </div>
 
-</div>
 
-    <button
-    type="submit"
-    class="btn btn-primary add-to-cart-button"
-    id="addToCartButton"
-    <%= (product.stock - cartQuantity) <= 0 ? "disabled" : "" %>
->
-    <i class="fa-solid fa-cart-plus"></i>
-    Add to Cart
-</button>
+                    <!-- =========================
+                         PRODUCT INFORMATION
+                    ========================= -->
+                    <div class="col-lg-6">
 
-</form>
+                        <div class="product-detail-content">
 
-    <div
-    id="cartMessage"
-    class="mt-3"
-    >
-    </div>
-        <p
-          id="stockMessage"
-          class="mt-2"
-        >
-        </p>
+                            <!-- Category -->
+                            <span class="product-detail-category">
+                                <i class="fa-solid fa-tag"></i>
+                                <%= product.category %>
+                            </span>
+
+
+                            <!-- Product Name -->
+                            <h1 class="product-detail-title">
+                                <%= product.name %>
+                            </h1>
+
+
+                            <!-- Price -->
+                            <div class="product-detail-price">
+                                ₹<%= product.price %>
+                            </div>
+
+
+                            <!-- Description -->
+                            <div class="product-detail-description">
+
+                                <h5>
+                                    Product Description
+                                </h5>
+
+                                <p>
+                                    <%= product.description %>
+                                </p>
+
+                            </div>
+
+
+                            <!-- Stock -->
+                            <div class="product-detail-stock-info">
+
+                                <i class="fa-solid fa-box"></i>
+
+                                <span>
+                                    Available Stock:
+                                </span>
+
+                                <strong id="availableStock">
+                                    <%= product.stock - cartQuantity %>
+                                </strong>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 ADD TO CART
+                            ========================= -->
+                            <form id="addToCartForm">
+
+                                <input
+                                    type="hidden"
+                                    name="productId"
+                                    value="<%= product._id %>"
+                                >
+
+
+                                <!-- Quantity -->
+                                <div class="product-quantity-section">
+
+                                    <label for="productQuantity">
+                                        Quantity
+                                    </label>
+
+                                    <div class="quantity-selector">
+
+                                        <button
+                                            type="button"
+                                            id="decreaseQuantity"
+                                            class="quantity-btn"
+                                        >
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+
+                                        <input
+                                            type="number"
+                                            id="productQuantity"
+                                            name="quantity"
+                                            value="1"
+                                            min="1"
+                                            max="<%= product.stock - cartQuantity %>"
+                                            readonly
+                                        >
+
+                                        <button
+                                            type="button"
+                                            id="increaseQuantity"
+                                            class="quantity-btn"
+                                        >
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Add to Cart -->
+                                <button
+                                    type="submit"
+                                    class="product-add-cart-btn"
+                                    id="addToCartButton"
+                                    <%= (product.stock - cartQuantity) <= 0 ? "disabled" : "" %>
+                                >
+
+                                    <i class="fa-solid fa-cart-plus"></i>
+
+                                    Add to Cart
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- Cart Message -->
+                            <div
+                                id="cartMessage"
+                                class="product-cart-message"
+                            >
+                            </div>
+
+
+                            <!-- Stock Message -->
+                            <p
+                                id="stockMessage"
+                                class="product-stock-message"
+                            >
+                            </p>
+
+
+                            <!-- =========================
+                                 PRODUCT FEATURES
+                            ========================= -->
+                            <div class="product-detail-features">
+
+                                <div class="product-feature">
+
+                                    <i class="fa-solid fa-truck"></i>
+
+                                    <div>
+                                        <strong>Cash on Delivery</strong>
+                                        <span>Pay when your order arrives</span>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="product-feature">
+
+                                    <i class="fa-solid fa-shield-halved"></i>
+
+                                    <div>
+                                        <strong>Secure Ordering</strong>
+                                        <span>Your order details are protected</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
 
-    </div>
-<script src="/js/cart.js"></script>
+    </section>
+
+
+    <script src="/js/cart.js"></script>
+  <%- include("../partials/footer") %>
+
 </body>
 </html>

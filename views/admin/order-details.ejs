@@ -1,291 +1,317 @@
-<%- include("../partials/header", { title: "Order Details | E-Commerce" }) %>
+<%- include("../partials/header", { title: "Order Details | Admin" }) %>
 
 <body>
 
-    <div class="container py-5">
+    <!-- =========================
+         ADMIN NAVBAR
+    ========================= -->
+    <nav class="admin-navbar">
+        <div class="container">
+            <div class="admin-navbar-content">
 
-        <!-- HEADER -->
+                <a href="/admin/dashboard" class="admin-brand">
+                    <i class="fa-solid fa-store"></i>
+                    E-Commerce Admin
+                </a>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="admin-nav-actions">
+                    <a href="/admin/orders" class="admin-back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to Orders
+                    </a>
 
-            <div>
+                    <a href="/auth/logout" class="admin-logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- =========================
+         ORDER DETAILS HERO
+    ========================= -->
+    <section class="admin-page-hero">
+        <div class="container">
+
+            <div class="admin-page-heading">
+
+                <span class="admin-page-badge">
+                    <i class="fa-solid fa-receipt"></i>
+                    Order Management
+                </span>
 
                 <h1>Order Details</h1>
 
-                <p class="text-muted mb-0">
+                <p>
                     Order #<%= order._id %>
                 </p>
 
             </div>
 
-
-            <a
-                href="/admin/orders"
-                class="btn btn-dark"
-            >
-
-                <i class="fa-solid fa-arrow-left"></i>
-
-                Back to Orders
-
-            </a>
-
         </div>
+    </section>
 
+    <!-- =========================
+         ORDER DETAILS CONTENT
+    ========================= -->
+    <section class="admin-order-details-content">
+        <div class="container">
 
-        <!-- CUSTOMER DETAILS -->
+            <!-- =========================
+                 CUSTOMER DETAILS
+            ========================= -->
+            <div class="admin-order-detail-card">
 
-        <div class="card admin-detail-card mb-4">
+                <div class="admin-order-detail-header">
+                    <div class="admin-order-detail-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
 
-            <div class="card-body">
+                    <div>
+                        <h2>Customer Details</h2>
+                        <p>Information provided for this order.</p>
+                    </div>
+                </div>
 
-                <h4 class="mb-4">
+                <div class="admin-customer-details-grid">
 
-                    <i class="fa-solid fa-user"></i>
-
-                    Customer Details
-
-                </h4>
-
-
-                <div class="row">
-
-                    <div class="col-md-4 mb-3">
-
-                        <strong>Name</strong>
-
-                        <p class="mb-0">
+                    <div class="admin-detail-item">
+                        <span>
+                            <i class="fa-solid fa-user"></i>
+                            Name
+                        </span>
+                        <strong>
                             <%= order.customerDetails.name %>
-                        </p>
-
+                        </strong>
                     </div>
 
-
-                    <div class="col-md-4 mb-3">
-
-                        <strong>Phone</strong>
-
-                        <p class="mb-0">
+                    <div class="admin-detail-item">
+                        <span>
+                            <i class="fa-solid fa-phone"></i>
+                            Phone
+                        </span>
+                        <strong>
                             <%= order.customerDetails.phone %>
-                        </p>
-
+                        </strong>
                     </div>
 
-
-                    <div class="col-md-4 mb-3">
-
-                        <strong>Email</strong>
-
-                        <p class="mb-0">
-
-                            <%= order.user
-                                ? order.user.email
-                                : "N/A" %>
-
-                        </p>
-
+                    <div class="admin-detail-item">
+                        <span>
+                            <i class="fa-solid fa-envelope"></i>
+                            Email
+                        </span>
+                        <strong>
+                            <%= order.user ? order.user.email : "N/A" %>
+                        </strong>
                     </div>
 
-
-                    <div class="col-12">
-
-                        <strong>Delivery Address</strong>
-
-                        <p class="mb-0">
+                    <div class="admin-detail-item admin-address-item">
+                        <span>
+                            <i class="fa-solid fa-location-dot"></i>
+                            Delivery Address
+                        </span>
+                        <strong>
                             <%= order.customerDetails.address %>
-                        </p>
-
+                        </strong>
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- =========================
+                 ORDERED PRODUCTS
+            ========================= -->
+            <div class="admin-order-detail-card">
 
+                <div class="admin-order-detail-header">
+                    <div class="admin-order-detail-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
 
-        <!-- ORDER PRODUCTS -->
+                    <div>
+                        <h2>Ordered Products</h2>
+                        <p>Products included in this order.</p>
+                    </div>
+                </div>
 
-        <div class="card admin-detail-card mb-4">
+                <div class="admin-ordered-products">
 
-            <div class="card-body">
+                    <% order.products.forEach((item) => { %>
 
-                <h4 class="mb-4">
+                        <div class="admin-ordered-product">
 
-                    <i class="fa-solid fa-box"></i>
+                            <div class="admin-ordered-product-icon">
+                                <i class="fa-solid fa-box"></i>
+                            </div>
 
-                    Ordered Products
+                            <div class="admin-ordered-product-info">
 
-                </h4>
+                                <strong>
+                                    <%= item.name %>
+                                </strong>
 
+                                <span>
+                                    ₹<%= item.price %>
+                                    ×
+                                    <%= item.quantity %>
+                                </span>
 
-                <% order.products.forEach((item) => { %>
+                            </div>
 
-                    <div class="order-product-row">
-
-                        <div>
-
-                            <strong>
-                                <%= item.name %>
+                            <strong class="admin-ordered-product-total">
+                                ₹<%= item.price * item.quantity %>
                             </strong>
-
-                            <p class="text-muted mb-0">
-
-                                ₹<%= item.price %>
-
-                                ×
-
-                                <%= item.quantity %>
-
-                            </p>
 
                         </div>
 
+                    <% }) %>
 
-                        <strong>
+                </div>
 
-                            ₹<%= item.price * item.quantity %>
+                <div class="admin-order-total-row">
+                    <span>Total Amount</span>
 
-                        </strong>
-
-                    </div>
-
-                <% }) %>
-
-
-                <hr>
-
-
-                <div class="d-flex justify-content-between">
-
-                    <h5>
-                        Total Amount
-                    </h5>
-
-                    <h5>
+                    <strong>
                         ₹<%= order.totalAmount %>
-                    </h5>
-
+                    </strong>
                 </div>
 
             </div>
 
-        </div>
+            <!-- =========================
+                 PAYMENT & ORDER INFORMATION
+            ========================= -->
+            <div class="admin-order-detail-card">
 
+                <div class="admin-order-detail-header">
+                    <div class="admin-order-detail-icon">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
 
-        <!-- PAYMENT & ORDER INFORMATION -->
+                    <div>
+                        <h2>Payment & Order Information</h2>
+                        <p>Payment and order status details.</p>
+                    </div>
+                </div>
 
-        <div class="card admin-detail-card">
-
-            <div class="card-body">
-
-                <h4 class="mb-4">
-
-                    <i class="fa-solid fa-credit-card"></i>
-
-                    Payment & Order Information
-
-                </h4>
-
-
-                <div class="row">
+                <div class="admin-order-info-grid">
 
                     <!-- PAYMENT METHOD -->
+                    <div class="admin-detail-item">
 
-                    <div class="col-md-4 mb-3">
+                        <span>
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                            Payment Method
+                        </span>
 
                         <strong>
-                            Payment Method
-                        </strong>
-
-                        <p class="mb-0">
                             <%= order.paymentMethod %>
-                        </p>
+                        </strong>
 
                     </div>
 
-
                     <!-- PAYMENT STATUS -->
+                    <div class="admin-detail-item">
 
-                    <div class="col-md-4 mb-3">
-
-                        <strong>
+                        <span>
+                            <i class="fa-solid fa-circle-info"></i>
                             Payment Status
-                        </strong>
+                        </span>
 
-                        <p class="mb-0">
+                        <div>
 
                             <% if (order.paymentStatus === "Paid") { %>
 
-                                <span class="badge bg-success">
+                                <span class="admin-status-badge payment-paid">
+                                    <i class="fa-solid fa-check"></i>
                                     Paid
                                 </span>
 
                             <% } else if (order.paymentStatus === "Failed") { %>
 
-                                <span class="badge bg-danger">
+                                <span class="admin-status-badge payment-failed">
+                                    <i class="fa-solid fa-xmark"></i>
                                     Failed
                                 </span>
 
                             <% } else { %>
 
-                                <span class="badge bg-warning text-dark">
+                                <span class="admin-status-badge payment-pending">
+                                    <i class="fa-solid fa-clock"></i>
                                     Pending
                                 </span>
 
                             <% } %>
 
-                        </p>
+                        </div>
 
                     </div>
 
-
                     <!-- ORDER DATE -->
+                    <div class="admin-detail-item">
 
-                    <div class="col-md-4 mb-3">
+                        <span>
+                            <i class="fa-regular fa-calendar"></i>
+                            Order Date
+                        </span>
 
                         <strong>
-                            Order Date
-                        </strong>
-
-                        <p class="mb-0">
-
                             <%= new Date(
                                 order.createdAt
                             ).toLocaleDateString() %>
+                        </strong>
 
-                        </p>
+                    </div>
+
+                    <!-- ORDER STATUS -->
+                    <div class="admin-detail-item">
+
+                        <span>
+                            <i class="fa-solid fa-truck"></i>
+                            Current Order Status
+                        </span>
+
+                        <strong class="admin-current-order-status">
+                            <%= order.orderStatus %>
+                        </strong>
 
                     </div>
 
                 </div>
 
+                <!-- =========================
+                     UPDATE ORDER STATUS
+                ========================= -->
+                <div class="admin-status-update-section">
 
-                <hr>
+                    <div class="admin-status-update-heading">
 
+                        <div class="admin-status-update-icon">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
 
-                <!-- UPDATE ORDER STATUS -->
+                        <div>
+                            <h3>Update Order Status</h3>
+                            <p>
+                                Change the current status of this order.
+                            </p>
+                        </div>
 
-                <div class="mt-4">
-
-                    <h5 class="mb-3">
-
-                        <i class="fa-solid fa-pen-to-square"></i>
-
-                        Update Order Status
-
-                    </h5>
-
+                    </div>
 
                     <form
                         action="/admin/orders/<%= order._id %>/status"
                         method="POST"
-                        class="d-flex gap-2"
+                        class="admin-status-update-form"
                     >
 
                         <select
                             name="orderStatus"
-                            class="form-select"
+                            class="admin-status-select"
                         >
 
                             <option
@@ -295,14 +321,12 @@
                                 Placed
                             </option>
 
-
                             <option
                                 value="Processing"
                                 <%= order.orderStatus === "Processing" ? "selected" : "" %>
                             >
                                 Processing
                             </option>
-
 
                             <option
                                 value="Shipped"
@@ -311,14 +335,12 @@
                                 Shipped
                             </option>
 
-
                             <option
                                 value="Delivered"
                                 <%= order.orderStatus === "Delivered" ? "selected" : "" %>
                             >
                                 Delivered
                             </option>
-
 
                             <option
                                 value="Cancelled"
@@ -329,16 +351,12 @@
 
                         </select>
 
-
                         <button
                             type="submit"
-                            class="btn btn-primary"
+                            class="admin-update-status-btn"
                         >
-
-                            <i class="fa-solid fa-pen"></i>
-
-                            Update
-
+                            <i class="fa-solid fa-check"></i>
+                            Update Status
                         </button>
 
                     </form>
@@ -348,9 +366,7 @@
             </div>
 
         </div>
-
-    </div>
+    </section>
 
 </body>
-
 </html>

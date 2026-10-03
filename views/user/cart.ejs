@@ -1,87 +1,122 @@
 <%- include("../partials/header", { title: "My Cart | E-Commerce" }) %>
 
 <body>
-
     <%- include("../partials/navbar") %>
 
-
-    <div class="container py-5">
-
-        <h1 class="mb-4">My Cart</h1>
-
-
-        <% if (!cart || cart.products.length === 0) { %>
-
-            <div class="alert alert-info">
-                Your cart is empty.
+    <!-- =========================
+         CART PAGE HERO
+    ========================= -->
+    <section class="cart-page-hero">
+        <div class="container">
+            <div class="cart-page-heading">
+                <span class="cart-page-badge">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Your Shopping Cart
+                </span>
+                <h1>Review Your Items</h1>
+                <p>
+                    Check your selected products and continue
+                    to a secure checkout.
+                </p>
             </div>
+        </div>
+    </section>
 
-            <a
-                href="/products"
-                class="btn btn-primary"
-            >
-                Continue Shopping
-            </a>
+    <!-- =========================
+         CART PAGE CONTENT
+    ========================= -->
+    <section class="cart-page-content">
+        <div class="container">
 
+            <% if (!cart || cart.products.length === 0) { %>
 
-        <% } else { %>
+                <!-- =========================
+                     EMPTY CART
+                ========================= -->
+                <div class="cart-empty-state">
+                    <div class="cart-empty-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
 
+                    <h2>Your Cart is Empty</h2>
 
-            <div class="row g-4">
+                    <p>
+                        Looks like you haven't added anything to your cart yet.
+                    </p>
 
+                    <a href="/products" class="cart-continue-btn">
+                        <i class="fa-solid fa-store"></i>
+                        Continue Shopping
+                    </a>
+                </div>
 
-                <!-- CART PRODUCTS -->
+            <% } else { %>
 
-                <div class="col-lg-8">
+                <div class="row g-4">
 
-                    <% cart.products.forEach((item) => { %>
+                    <!-- =========================
+                         CART PRODUCTS
+                    ========================= -->
+                    <div class="col-lg-8">
 
-                        <div
-                            class="card mb-3 cart-item"
-                            data-product-id="<%= item.product._id %>"
-                            data-stock="<%= item.product.stock %>"
-                        >
+                        <div class="cart-items-header">
+                            <div>
+                                <h2>Your Items</h2>
+                                <p>
+                                    <%= cart.products.reduce(
+                                        (total, item) => total + item.quantity,
+                                        0
+                                    ) %>
+                                    item(s) in your cart
+                                </p>
+                            </div>
+                        </div>
 
-                            <div class="card-body">
+                        <% cart.products.forEach((item) => { %>
 
-                                <div class="row align-items-center">
+                            <div
+                                class="cart-item"
+                                data-product-id="<%= item.product._id %>"
+                                data-stock="<%= item.product.stock %>"
+                            >
 
+                                <!-- =========================
+                                     PRODUCT IMAGE
+                                ========================= -->
+                                <div class="cart-product-image-wrapper">
+                                    <img
+                                        src="<%= item.product.image %>"
+                                        alt="<%= item.product.name %>"
+                                        class="cart-product-image"
+                                    >
+                                </div>
 
-                                    <!-- IMAGE -->
+                                <!-- =========================
+                                     PRODUCT DETAILS
+                                ========================= -->
+                                <div class="cart-product-details">
 
-                                    <div class="col-md-3">
+                                    <span class="cart-product-category">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <%= item.product.category %>
+                                    </span>
 
-                                        <img
-                                            src="<%= item.product.image %>"
-                                            alt="<%= item.product.name %>"
-                                            class="cart-product-image"
-                                        >
+                                    <h5 class="cart-product-name">
+                                        <%= item.product.name %>
+                                    </h5>
 
-                                    </div>
+                                    <p class="cart-product-price">
+                                        ₹<%= item.product.price %>
+                                    </p>
 
+                                    <!-- =========================
+                                         QUANTITY
+                                    ========================= -->
+                                    <div class="cart-quantity-wrapper">
 
-                                    <!-- PRODUCT DETAILS -->
-
-                                    <div class="col-md-4">
-
-                                        <h5 class="cart-product-name">
-                                            <%= item.product.name %>
-                                        </h5>
-
-                                        <p class="text-muted mb-2">
-                                            <%= item.product.category %>
-                                        </p>
-
-                                        <p class="cart-product-price mb-0">
-                                            ₹<%= item.product.price %>
-                                        </p>
-
-                                    </div>
-
-
-                                    <!-- QUANTITY -->
-
-                                    <div class="col-md-3">
+                                        <span class="cart-quantity-label">
+                                            Quantity
+                                        </span>
 
                                         <div class="cart-quantity-selector">
 
@@ -89,7 +124,7 @@
                                                 type="button"
                                                 class="cart-quantity-btn decrease-cart"
                                             >
-                                                −
+                                                <i class="fa-solid fa-minus"></i>
                                             </button>
 
                                             <span class="cart-quantity">
@@ -100,126 +135,124 @@
                                                 type="button"
                                                 class="cart-quantity-btn increase-cart"
                                             >
-                                                +
+                                                <i class="fa-solid fa-plus"></i>
                                             </button>
 
                                         </div>
 
-
-                                        <button
-                                            type="button"
-                                            class="remove-cart-item"
-                                            title="Remove from cart"
-                                        >
-                                            <i class="fa-solid fa-trash-can"></i>
-                                            <span>Remove</span>
-                                        </button>
-
                                     </div>
 
+                                    <button
+                                        type="button"
+                                        class="remove-cart-item"
+                                        title="Remove from cart"
+                                    >
+                                        <i class="fa-solid fa-trash-can"></i>
+                                        <span>Remove</span>
+                                    </button>
 
-                                    <!-- SUBTOTAL -->
+                                </div>
 
-                                    <div class="col-md-2 text-md-end">
+                                <!-- =========================
+                                     SUBTOTAL
+                                ========================= -->
+                                <div class="cart-item-total">
 
-                                        <strong class="cart-item-subtotal">
-                                            ₹<%= item.product.price * item.quantity %>
-                                        </strong>
+                                    <span>Subtotal</span>
 
-                                    </div>
-
+                                    <strong class="cart-item-subtotal">
+                                        ₹<%= item.product.price * item.quantity %>
+                                    </strong>
 
                                 </div>
 
                             </div>
 
-                        </div>
+                        <% }) %>
 
-                    <% }) %>
+                    </div>
 
-                </div>
+                    <!-- =========================
+                         CART SUMMARY
+                    ========================= -->
+                    <div class="col-lg-4">
 
+                        <div class="cart-summary">
 
-                <!-- CART SUMMARY -->
-
-                <div class="col-lg-4">
-
-                    <div class="card cart-summary">
-
-                        <div class="card-body">
-
-                            <h4 class="mb-4">
-                                Order Summary
-                            </h4>
-
-
-                            <div class="d-flex justify-content-between mb-3">
-
-                                <span>
-                                    Items
+                            <div class="cart-summary-header">
+                                <span class="cart-summary-icon">
+                                    <i class="fa-solid fa-receipt"></i>
                                 </span>
 
-                                <span id="cartTotalItems">
-                                    <%= cart.products.reduce(
-                                        (total, item) =>
-                                            total + item.quantity,
-                                        0
-                                    ) %>
-                                </span>
-
+                                <div>
+                                    <h3>Order Summary</h3>
+                                    <p>Review your total</p>
+                                </div>
                             </div>
 
+                            <div class="cart-summary-details">
 
-                            <div class="d-flex justify-content-between mb-3">
+                                <div class="cart-summary-row">
+                                    <span>Items</span>
+                                    <span id="cartTotalItems">
+                                        <%= cart.products.reduce(
+                                            (total, item) =>
+                                                total + item.quantity,
+                                            0
+                                        ) %>
+                                    </span>
+                                </div>
 
-                                <span>
-                                    Subtotal
-                                </span>
+                                <div class="cart-summary-row">
+                                    <span>Subtotal</span>
+                                    <span id="cartTotalPrice">
+                                        ₹<%= cart.products.reduce(
+                                            (total, item) =>
+                                                total +
+                                                (item.product.price * item.quantity),
+                                            0
+                                        ) %>
+                                    </span>
+                                </div>
 
-                                <span id="cartTotalPrice">
+                                <div class="cart-summary-row">
+                                    <span>Delivery</span>
+                                    <span class="cart-free-delivery">
+                                        FREE
+                                    </span>
+                                </div>
 
-                                    ₹<%= cart.products.reduce(
-                                        (total, item) =>
-                                            total +
-                                            (item.product.price * item.quantity),
-                                        0
-                                    ) %>
+                                <div class="cart-summary-divider"></div>
 
-                                </span>
+                                <div class="cart-summary-total">
+                                    <span>Total</span>
+                                    <strong id="cartGrandTotal">
+                                        ₹<%= cart.products.reduce(
+                                            (total, item) =>
+                                                total +
+                                                (item.product.price * item.quantity),
+                                            0
+                                        ) %>
+                                    </strong>
+                                </div>
 
                             </div>
-
-
-                            <hr>
-
-
-                            <div class="d-flex justify-content-between mb-4">
-
-                                <strong>
-                                    Total
-                                </strong>
-
-                                <strong id="cartGrandTotal">
-
-                                    ₹<%= cart.products.reduce(
-                                        (total, item) =>
-                                            total +
-                                            (item.product.price * item.quantity),
-                                        0
-                                    ) %>
-
-                                </strong>
-
-                            </div>
-
 
                             <a
                                 href="/orders/checkout"
-                                class="btn btn-primary w-100"
+                                class="cart-checkout-btn"
                             >
                                 Proceed to Checkout
+                                <i class="fa-solid fa-arrow-right"></i>
                             </a>
 
+                            <a
+                                href="/products"
+                                class="cart-continue-shopping"
+                            >
+                                <i class="fa-solid fa-arrow-left"></i>
+                                Continue Shopping
+                            </a>
 
                         </div>
 
@@ -227,16 +260,13 @@
 
                 </div>
 
+            <% } %>
 
-            </div>
-
-
-        <% } %>
-
-    </div>
-
+        </div>
+    </section>
 
     <script src="/js/cart.js"></script>
+      <%- include("../partials/footer") %>
 
 </body>
 </html>
