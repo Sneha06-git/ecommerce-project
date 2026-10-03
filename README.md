@@ -79,13 +79,13 @@ Cash on Delivery (COD)
 The application uses MongoDB with Mongoose.
 
 The default local database configuration is:
-```text
+
 mongodb://127.0.0.1:27017/ecommerceDB
 
 ## Environment Variables
 
 The project uses the following environment variables:
-```text
+
 PORT
 MONGO_URI
 SESSION_SECRET
