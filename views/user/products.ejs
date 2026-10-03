@@ -1,0 +1,252 @@
+<%- include("../partials/header", { title: "Products | E-Commerce" }) %>
+
+<body>
+
+    <%- include("../partials/navbar") %>
+
+    <!-- =========================
+         PRODUCTS PAGE HERO
+    ========================= -->
+    <section class="products-page-hero">
+        <div class="container">
+
+            <div class="products-page-heading">
+                <span class="products-page-badge">
+                    <i class="fa-solid fa-store"></i>
+                    Our Collection
+                </span>
+
+                <h1>Find Something You'll Love</h1>
+
+                <p>
+                    Explore our collection of products and discover
+                    something perfect for you.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+         PRODUCTS PAGE CONTENT
+    ========================= -->
+    <section class="products-page-content">
+
+        <div class="container">
+
+            <!-- =========================
+                 PRODUCT FILTERS
+            ========================= -->
+            <div class="products-filter-card">
+
+                <div class="row g-3 align-items-center">
+
+                    <!-- Search -->
+                    <div class="col-lg-6">
+
+                        <div class="product-search-box">
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            <input
+                                type="text"
+                                id="productSearch"
+                                placeholder="Search products..."
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Category -->
+                    <div class="col-lg-4">
+
+                        <select
+                            id="categoryFilter"
+                            class="product-category-select"
+                        >
+
+                            <option value="all">
+                                All Categories
+                            </option>
+
+                            <%
+                                const categories = [
+                                    ...new Set(
+                                        products.map(
+                                            product => product.category
+                                        )
+                                    )
+                                ];
+                            %>
+
+                            <% categories.forEach((category) => { %>
+
+                                <option value="<%= category %>">
+                                    <%= category %>
+                                </option>
+
+                            <% }) %>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Clear -->
+                    <div class="col-lg-2">
+
+                        <button
+                            type="button"
+                            id="clearFilters"
+                            class="products-clear-btn"
+                        >
+                            <i class="fa-solid fa-rotate-left"></i>
+                            Clear
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 NO PRODUCTS MESSAGE
+            ========================= -->
+            <div
+                id="noProductsMessage"
+                class="products-no-results d-none"
+            >
+                <i class="fa-solid fa-box-open"></i>
+
+                <h4>No products found</h4>
+
+                <p>
+                    Try changing your search or category filter.
+                </p>
+            </div>
+
+
+            <!-- =========================
+                 PRODUCTS GRID
+            ========================= -->
+            <div class="row g-4">
+
+                <% if (products.length === 0) { %>
+
+                    <div class="col-12">
+
+                        <div class="products-empty-state">
+
+                            <i class="fa-solid fa-box-open"></i>
+
+                            <h3>No products available</h3>
+
+                            <p>
+                                There are no products available right now.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+
+                <% products.forEach((product) => { %>
+
+                    <div
+                        class="col-md-6 col-lg-4 product-item"
+                        data-name="<%= product.name.toLowerCase() %>"
+                        data-category="<%= product.category.toLowerCase() %>"
+                    >
+
+                        <a
+                            href="/products/<%= product._id %>"
+                            class="product-card-link"
+                        >
+
+                            <div class="product-listing-card">
+
+                                <!-- =========================
+                                     PRODUCT IMAGE
+                                ========================= -->
+                                <div class="product-image-wrapper">
+
+                                    <img
+                                        src="<%= product.image %>"
+                                        alt="<%= product.name %>"
+                                        class="product-listing-image"
+                                    >
+
+                                    <% if (product.stock > 0) { %>
+
+                                        <span class="product-stock-badge in-stock">
+                                            <i class="fa-solid fa-check"></i>
+                                            In Stock
+                                        </span>
+
+                                    <% } else { %>
+
+                                        <span class="product-stock-badge out-of-stock">
+                                            <i class="fa-solid fa-xmark"></i>
+                                            Out of Stock
+                                        </span>
+
+                                    <% } %>
+
+                                </div>
+
+
+                                <!-- =========================
+                                     PRODUCT INFORMATION
+                                ========================= -->
+                                <div class="product-listing-body">
+
+                                    <span class="product-listing-category">
+                                        <%= product.category %>
+                                    </span>
+
+                                    <h5 class="product-listing-name">
+                                        <%= product.name %>
+                                    </h5>
+
+                                    <div class="product-card-bottom">
+
+                                        <span class="product-listing-price">
+                                            ₹<%= product.price %>
+                                        </span>
+
+                                        <span class="product-view-btn">
+                                            View
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="/js/main.js"></script>
+  <%- include("../partials/footer") %>
+
+</body>
+</html>

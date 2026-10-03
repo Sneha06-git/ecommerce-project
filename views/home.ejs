@@ -1,0 +1,517 @@
+<%- include("./partials/header", { title: "Home | E-Commerce" }) %>
+
+<body>
+
+    <%- include("./partials/navbar") %>
+
+    <!-- =========================
+         HERO CAROUSEL
+    ========================= -->
+    <section class="home-hero">
+
+        <div class="container">
+
+            <div
+                id="homeHeroCarousel"
+                class="carousel slide home-carousel"
+                data-bs-ride="carousel"
+            >
+
+                <div class="carousel-indicators">
+
+                    <button
+                        type="button"
+                        data-bs-target="#homeHeroCarousel"
+                        data-bs-slide-to="0"
+                        class="active"
+                        aria-current="true"
+                        aria-label="Slide 1"
+                    ></button>
+
+                    <button
+                        type="button"
+                        data-bs-target="#homeHeroCarousel"
+                        data-bs-slide-to="1"
+                        aria-label="Slide 2"
+                    ></button>
+
+                    <button
+                        type="button"
+                        data-bs-target="#homeHeroCarousel"
+                        data-bs-slide-to="2"
+                        aria-label="Slide 3"
+                    ></button>
+
+                </div>
+
+                <div class="carousel-inner">
+
+                    <!-- SLIDE 1 -->
+                    <div class="carousel-item active">
+
+                        <div class="home-hero-slide">
+
+                            <div class="home-hero-content">
+
+                                <span class="home-hero-badge">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                    Welcome to E-Commerce
+                                </span>
+
+                                <h1>
+                                    Discover Products
+                                    You'll Love
+                                </h1>
+
+                                <p>
+                                    Explore our collection of quality products
+                                    and find something perfect for you.
+                                </p>
+
+                                <a
+                                    href="/products"
+                                    class="home-hero-btn"
+                                >
+                                    Shop Now
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+
+                            </div>
+
+                            <div class="home-hero-visual">
+                                <div class="home-hero-circle">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SLIDE 2 -->
+                    <div class="carousel-item">
+
+                        <div class="home-hero-slide">
+
+                            <div class="home-hero-content">
+
+                                <span class="home-hero-badge">
+                                    <i class="fa-solid fa-star"></i>
+                                    Explore Our Collection
+                                </span>
+
+                                <h1>
+                                    Find Something
+                                    Special
+                                </h1>
+
+                                <p>
+                                    Browse different categories and discover
+                                    products made for your everyday needs.
+                                </p>
+
+                                <a
+                                    href="/products"
+                                    class="home-hero-btn"
+                                >
+                                    Explore Products
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+
+                            </div>
+
+                            <div class="home-hero-visual">
+                                <div class="home-hero-circle">
+                                    <i class="fa-solid fa-store"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SLIDE 3 -->
+                    <div class="carousel-item">
+
+                        <div class="home-hero-slide">
+
+                            <div class="home-hero-content">
+
+                                <span class="home-hero-badge">
+                                    <i class="fa-solid fa-truck"></i>
+                                    Easy Shopping
+                                </span>
+
+                                <h1>
+                                    Shop Easily,
+                                    Pay on Delivery
+                                </h1>
+
+                                <p>
+                                    Add your favorite products to the cart
+                                    and place your order with Cash on Delivery.
+                                </p>
+
+                                <a
+                                    href="/products"
+                                    class="home-hero-btn"
+                                >
+                                    Start Shopping
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+
+                            </div>
+
+                            <div class="home-hero-visual">
+                                <div class="home-hero-circle">
+                                    <i class="fa-solid fa-box-open"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="carousel-control-prev home-carousel-control"
+                    type="button"
+                    data-bs-target="#homeHeroCarousel"
+                    data-bs-slide="prev"
+                >
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+
+                <button
+                    class="carousel-control-next home-carousel-control"
+                    type="button"
+                    data-bs-target="#homeHeroCarousel"
+                    data-bs-slide="next"
+                >
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SHOP BY CATEGORY
+    ========================= -->
+    <section class="home-categories">
+
+        <div class="container">
+
+            <div class="home-section-heading">
+
+                <span>
+                    <i class="fa-solid fa-layer-group"></i>
+                    Categories
+                </span>
+
+                <h2>Shop by Category</h2>
+
+                <p>
+                    Explore our product categories and find what you need.
+                </p>
+
+            </div>
+
+            <div class="row g-4">
+
+                <%
+                    const categories = [
+                        ...new Set(
+                            featuredProducts.map(
+                                product => product.category
+                            )
+                        )
+                    ].slice(0, 4);
+                %>
+
+                <% if (categories.length > 0) { %>
+
+                    <% categories.forEach((category, index) => { %>
+
+                        <div class="col-6 col-md-3">
+
+                            <a
+                                href="/products"
+                                class="home-category-card"
+                            >
+
+                                <div class="home-category-icon">
+                                    <% if (index === 0) { %>
+                                        <i class="fa-solid fa-mobile-screen-button"></i>
+                                    <% } else if (index === 1) { %>
+                                        <i class="fa-solid fa-shirt"></i>
+                                    <% } else if (index === 2) { %>
+                                        <i class="fa-solid fa-house"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-bag-shopping"></i>
+                                    <% } %>
+                                </div>
+
+                                <h4>
+                                    <%= category %>
+                                </h4>
+
+                                <span>
+                                    Explore
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <div class="col-12">
+
+                        <div class="home-category-empty">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <p>Categories will appear here.</p>
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURED PRODUCTS
+    ========================= -->
+    <section class="home-featured-products">
+
+        <div class="container">
+
+            <div class="home-section-heading home-section-heading-row">
+
+                <div>
+
+                    <span>
+                        <i class="fa-solid fa-star"></i>
+                        Featured
+                    </span>
+
+                    <h2>Featured Products</h2>
+
+                    <p>
+                        Check out some of our latest products.
+                    </p>
+
+                </div>
+
+                <a
+                    href="/products"
+                    class="home-view-all-btn"
+                >
+                    View All
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <% if (featuredProducts.length === 0) { %>
+
+                <div class="home-products-empty">
+
+                    <i class="fa-solid fa-box-open"></i>
+
+                    <h3>No Products Available</h3>
+
+                    <p>
+                        Products will appear here once they are added.
+                    </p>
+
+                </div>
+
+            <% } else { %>
+
+                <div class="row g-4">
+
+                    <% featuredProducts.forEach((product) => { %>
+
+                        <div class="col-sm-6 col-lg-3">
+
+                            <a
+                                href="/products/<%= product._id %>"
+                                class="home-product-link"
+                            >
+
+                                <div class="home-product-card">
+
+                                    <div class="home-product-image-wrapper">
+
+                                        <img
+                                            src="<%= product.image %>"
+                                            alt="<%= product.name %>"
+                                            class="home-product-image"
+                                        >
+
+                                        <% if (product.stock > 0) { %>
+
+                                            <span class="home-product-stock">
+                                                In Stock
+                                            </span>
+
+                                        <% } else { %>
+
+                                            <span class="home-product-stock out-of-stock">
+                                                Out of Stock
+                                            </span>
+
+                                        <% } %>
+
+                                    </div>
+
+                                    <div class="home-product-body">
+
+                                        <span class="home-product-category">
+                                            <%= product.category %>
+                                        </span>
+
+                                        <h3>
+                                            <%= product.name %>
+                                        </h3>
+
+                                        <div class="home-product-bottom">
+
+                                            <strong>
+                                                ₹<%= product.price %>
+                                            </strong>
+
+                                            <span>
+                                                View
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </a>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         WHY SHOP WITH US
+    ========================= -->
+    <section class="home-features">
+
+        <div class="container">
+
+            <div class="home-section-heading">
+
+                <span>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Shopping Made Easy
+                </span>
+
+                <h2>Why Shop With Us?</h2>
+
+                <p>
+                    Everything you need for a simple shopping experience.
+                </p>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+
+                    <div class="home-feature-card">
+
+                        <div class="home-feature-icon">
+                            <i class="fa-solid fa-truck"></i>
+                        </div>
+
+                        <h3>Cash on Delivery</h3>
+
+                        <p>
+                            Place your order easily and pay when
+                            your order arrives.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="home-feature-card">
+
+                        <div class="home-feature-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <h3>Secure Ordering</h3>
+
+                        <p>
+                            Your account and order information
+                            are handled securely.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="home-feature-card">
+
+                        <div class="home-feature-icon">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+
+                        <h3>Easy Shopping</h3>
+
+                        <p>
+                            Browse products, manage your cart
+                            and place orders with ease.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <%- include("./partials/footer") %>
+
+</body>
+</html>

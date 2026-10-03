@@ -1,0 +1,283 @@
+<%- include("../partials/header", { title: "Add Product | Admin" }) %>
+
+<body>
+
+    <!-- =========================
+         ADMIN NAVBAR
+    ========================= -->
+    <nav class="admin-navbar">
+        <div class="container">
+            <div class="admin-navbar-content">
+
+                <a href="/admin/dashboard" class="admin-brand">
+                    <i class="fa-solid fa-store"></i>
+                    E-Commerce Admin
+                </a>
+
+                <div class="admin-nav-actions">
+                    <a href="/admin/dashboard" class="admin-back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="/auth/logout" class="admin-logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- =========================
+         ADD PRODUCT HERO
+    ========================= -->
+    <section class="admin-page-hero">
+        <div class="container">
+
+            <div class="admin-page-heading">
+
+                <span class="admin-page-badge">
+                    <i class="fa-solid fa-plus"></i>
+                    Product Management
+                </span>
+
+                <h1>Add New Product</h1>
+
+                <p>
+                    Add a new product with its details, image and
+                    available stock.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         ADD PRODUCT CONTENT
+    ========================= -->
+    <section class="admin-add-product-content">
+        <div class="container">
+
+            <div class="admin-add-product-wrapper">
+
+                <div class="admin-add-product-card">
+
+                    <!-- FORM HEADER -->
+                    <div class="admin-form-header">
+
+                        <div class="admin-form-icon">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+
+                        <div>
+                            <h2>Product Information</h2>
+                            <p>
+                                Enter the details of the product below.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- PRODUCT FORM -->
+                    <form
+                        action="/admin/add-product"
+                        method="POST"
+                        enctype="multipart/form-data"
+                        class="admin-product-form"
+                    >
+
+                        <!-- PRODUCT NAME -->
+                        <div class="admin-form-group">
+                            <label for="productName">
+                                Product Name
+                            </label>
+
+                            <div class="admin-input-wrapper">
+                                <i class="fa-solid fa-tag"></i>
+
+                                <input
+                                    type="text"
+                                    id="productName"
+                                    name="name"
+                                    placeholder="Enter product name"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <!-- DESCRIPTION -->
+                        <div class="admin-form-group">
+                            <label for="productDescription">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="productDescription"
+                                name="description"
+                                rows="5"
+                                placeholder="Enter product description"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <!-- PRICE + CATEGORY -->
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+
+                                <div class="admin-form-group">
+                                    <label for="productPrice">
+                                        Price
+                                    </label>
+
+                                    <div class="admin-input-wrapper">
+                                        <span class="admin-input-symbol">
+                                            ₹
+                                        </span>
+
+                                        <input
+                                            type="number"
+                                            id="productPrice"
+                                            name="price"
+                                            placeholder="Enter price"
+                                            min="0"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="admin-form-group">
+                                    <label for="productCategory">
+                                        Category
+                                    </label>
+
+                                    <div class="admin-input-wrapper">
+                                        <i class="fa-solid fa-layer-group"></i>
+
+                                        <input
+                                            type="text"
+                                            id="productCategory"
+                                            name="category"
+                                            placeholder="Example: Electronics"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- IMAGE + STOCK -->
+                        <div class="row g-4">
+
+                            <div class="col-md-7">
+
+                                <div class="admin-form-group">
+                                    <label for="productImage">
+                                        Product Image
+                                    </label>
+
+                                    <div class="admin-file-wrapper">
+
+                                        <i class="fa-solid fa-image"></i>
+
+                                        <input
+                                            type="file"
+                                            id="productImage"
+                                            name="image"
+                                            accept="image/*"
+                                            required
+                                        >
+
+                                    </div>
+
+                                    <small>
+                                        Upload a clear product image.
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-5">
+
+                                <div class="admin-form-group">
+                                    <label for="productStock">
+                                        Stock Quantity
+                                    </label>
+
+                                    <div class="admin-input-wrapper">
+                                        <i class="fa-solid fa-cubes"></i>
+
+                                        <input
+                                            type="number"
+                                            id="productStock"
+                                            name="stock"
+                                            placeholder="Enter stock"
+                                            min="0"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- FORM ACTIONS -->
+                        <div class="admin-form-actions">
+
+                            <a
+                                href="/admin/products"
+                                class="admin-cancel-btn"
+                            >
+                                <i class="fa-solid fa-arrow-left"></i>
+                                Cancel
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="admin-submit-product-btn"
+                            >
+                                <i class="fa-solid fa-plus"></i>
+                                Add Product
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         SUCCESS / ERROR MESSAGE
+    ========================= -->
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        const message = params.get("message");
+        const error = params.get("error");
+
+        if (message) {
+            alert(message);
+        }
+
+        if (error) {
+            alert(error);
+        }
+    </script>
+
+</body>
+</html>

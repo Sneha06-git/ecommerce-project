@@ -1,0 +1,193 @@
+<%- include("../partials/header", { title: "Products | Admin" }) %>
+
+<body>
+
+    <!-- =========================
+         ADMIN NAVBAR
+    ========================= -->
+    <nav class="admin-navbar">
+        <div class="container">
+            <div class="admin-navbar-content">
+
+                <a href="/admin/dashboard" class="admin-brand">
+                    <i class="fa-solid fa-store"></i>
+                    E-Commerce Admin
+                </a>
+
+                <div class="admin-nav-actions">
+                    <a href="/admin/dashboard" class="admin-back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="/auth/logout" class="admin-logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- =========================
+         ADMIN PRODUCTS HERO
+    ========================= -->
+    <section class="admin-page-hero">
+        <div class="container">
+
+            <div class="admin-page-heading">
+
+                <span class="admin-page-badge">
+                    <i class="fa-solid fa-box-open"></i>
+                    Product Management
+                </span>
+
+                <h1>All Products</h1>
+
+                <p>
+                    View and manage the products available
+                    in your e-commerce store.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         ADMIN PRODUCTS CONTENT
+    ========================= -->
+    <section class="admin-products-content">
+        <div class="container">
+
+            <div class="admin-products-topbar">
+                <div>
+                    <h2>Product Collection</h2>
+                    <p>
+                        <%= products.length %> product(s) available
+                    </p>
+                </div>
+
+                <a href="/admin/add-product" class="admin-add-product-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Product
+                </a>
+            </div>
+
+            <% if (products.length === 0) { %>
+
+                <!-- =========================
+                     EMPTY PRODUCTS
+                ========================= -->
+                <div class="admin-products-empty">
+
+                    <div class="admin-products-empty-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+
+                    <h3>No Products Available</h3>
+
+                    <p>
+                        You haven't added any products to your store yet.
+                    </p>
+
+                    <a href="/admin/add-product" class="admin-add-product-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Your First Product
+                    </a>
+
+                </div>
+
+            <% } else { %>
+
+                <div class="row g-4">
+
+                    <% products.forEach((product) => { %>
+
+                        <div class="col-md-6 col-xl-4">
+
+                            <div class="admin-product-card">
+
+                                <!-- PRODUCT IMAGE -->
+                                <div class="admin-product-image-wrapper">
+
+                                    <img
+                                        src="<%= product.image %>"
+                                        alt="<%= product.name %>"
+                                        class="admin-product-image"
+                                    >
+
+                                    <% if (product.stock > 0) { %>
+                                        <span class="admin-product-stock in-stock">
+                                            <i class="fa-solid fa-check"></i>
+                                            In Stock
+                                        </span>
+                                    <% } else { %>
+                                        <span class="admin-product-stock out-of-stock">
+                                            <i class="fa-solid fa-xmark"></i>
+                                            Out of Stock
+                                        </span>
+                                    <% } %>
+
+                                </div>
+
+                                <!-- PRODUCT INFORMATION -->
+                                <div class="admin-product-body">
+
+                                    <span class="admin-product-category">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <%= product.category %>
+                                    </span>
+
+                                    <h3 class="admin-product-name">
+                                        <%= product.name %>
+                                    </h3>
+
+                                    <p class="admin-product-description">
+                                        <%= product.description %>
+                                    </p>
+
+                                    <div class="admin-product-meta">
+
+                                        <div>
+                                            <span>Price</span>
+                                            <strong>
+                                                ₹<%= product.price %>
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <span>Stock</span>
+                                            <strong>
+                                                <%= product.stock %>
+                                            </strong>
+                                        </div>
+
+                                    </div>
+
+                                    <a
+                                        href="/products/<%= product._id %>"
+                                        class="admin-view-product-btn"
+                                    >
+                                        View Product
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+            <% } %>
+
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<%- include("../partials/header", { title: "Order Details | E-Commerce" }) %>
+
+<body>
+    <%- include("../partials/navbar") %>
+
+    <!-- =========================
+         ORDER DETAILS HERO
+    ========================= -->
+    <section class="order-details-hero">
+        <div class="container">
+            <div class="order-details-heading">
+
+                <a href="/orders" class="order-details-back-link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to My Orders
+                </a>
+
+                <span class="order-details-badge">
+                    <i class="fa-solid fa-box-open"></i>
+                    Order Details
+                </span>
+
+                <h1>Order Details</h1>
+
+                <p>
+                    Review your order information, products,
+                    delivery details and payment status.
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         ORDER DETAILS CONTENT
+    ========================= -->
+    <section class="order-details-content">
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- =========================
+                     MAIN ORDER INFORMATION
+                ========================= -->
+                <div class="col-lg-8">
+
+                    <!-- ORDER HEADER -->
+                    <div class="order-details-card">
+
+                        <div class="order-details-card-header">
+
+                            <div>
+                                <span class="order-details-label">
+                                    Order ID
+                                </span>
+
+                                <h2>
+                                    #<%= order._id %>
+                                </h2>
+
+                                <span class="order-details-date">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Placed on
+                                    <%= new Date(
+                                        order.createdAt
+                                    ).toLocaleDateString() %>
+                                </span>
+                            </div>
+
+                            <span class="order-details-status">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <%= order.orderStatus %>
+                            </span>
+
+                        </div>
+
+                        <!-- PRODUCTS -->
+                        <div class="order-details-products">
+
+                            <h3>
+                                <i class="fa-solid fa-bag-shopping"></i>
+                                Ordered Products
+                            </h3>
+
+                            <% order.products.forEach((item) => { %>
+
+                                <div class="order-details-product">
+
+                                    <div class="order-details-product-icon">
+                                        <i class="fa-solid fa-box"></i>
+                                    </div>
+
+                                    <div class="order-details-product-info">
+                                        <strong>
+                                            <%= item.name %>
+                                        </strong>
+
+                                        <span>
+                                            ₹<%= item.price %>
+                                            ×
+                                            <%= item.quantity %>
+                                        </span>
+                                    </div>
+
+                                    <strong class="order-details-product-total">
+                                        ₹<%= item.price * item.quantity %>
+                                    </strong>
+
+                                </div>
+
+                            <% }) %>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =========================
+                         CUSTOMER DETAILS
+                    ========================= -->
+                    <div class="order-details-card">
+
+                        <div class="order-details-section-heading">
+                            <span class="order-details-section-icon">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+
+                            <div>
+                                <h3>Delivery Details</h3>
+                                <p>Information provided for this order</p>
+                            </div>
+                        </div>
+
+                        <div class="order-customer-details">
+
+                            <div class="order-customer-detail">
+                                <span>
+                                    <i class="fa-solid fa-user"></i>
+                                    Name
+                                </span>
+
+                                <strong>
+                                    <%= order.customerDetails.name %>
+                                </strong>
+                            </div>
+
+                            <div class="order-customer-detail">
+                                <span>
+                                    <i class="fa-solid fa-phone"></i>
+                                    Phone
+                                </span>
+
+                                <strong>
+                                    <%= order.customerDetails.phone %>
+                                </strong>
+                            </div>
+
+                            <div class="order-customer-detail order-address-detail">
+                                <span>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    Address
+                                </span>
+
+                                <strong>
+                                    <%= order.customerDetails.address %>
+                                </strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- =========================
+                     ORDER SUMMARY
+                ========================= -->
+                <div class="col-lg-4">
+
+                    <div class="order-details-summary">
+
+                        <div class="order-details-summary-header">
+
+                            <span class="order-summary-icon">
+                                <i class="fa-solid fa-receipt"></i>
+                            </span>
+
+                            <div>
+                                <h3>Order Summary</h3>
+                                <p>Payment and total details</p>
+                            </div>
+
+                        </div>
+
+                        <div class="order-summary-row">
+                            <span>Payment Method</span>
+
+                            <strong>
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                                <%= order.paymentMethod %>
+                            </strong>
+                        </div>
+
+                        <div class="order-summary-row">
+                            <span>Payment Status</span>
+
+                            <strong class="order-payment-status">
+                                <%= order.paymentStatus %>
+                            </strong>
+                        </div>
+
+                        <div class="order-summary-divider"></div>
+
+                        <div class="order-summary-row">
+                            <span>Products</span>
+
+                            <span>
+                                <%= order.products.reduce(
+                                    (total, item) =>
+                                        total + item.quantity,
+                                    0
+                                ) %>
+                            </span>
+                        </div>
+
+                        <div class="order-summary-divider"></div>
+
+                        <div class="order-details-grand-total">
+                            <span>Total Amount</span>
+
+                            <strong>
+                                ₹<%= order.totalAmount %>
+                            </strong>
+                        </div>
+
+                        <div class="order-details-cod-note">
+                            <i class="fa-solid fa-truck"></i>
+
+                            <span>
+                                Your order will be delivered using
+                                Cash on Delivery.
+                            </span>
+                        </div>
+
+                        <a
+                            href="/products"
+                            class="order-details-shop-btn"
+                        >
+                            <i class="fa-solid fa-store"></i>
+                            Continue Shopping
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+  <%- include("../partials/footer") %>
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+<%- include("../partials/header", { title: "Order Details | Admin" }) %>
+
+<body>
+
+    <!-- =========================
+         ADMIN NAVBAR
+    ========================= -->
+    <nav class="admin-navbar">
+        <div class="container">
+            <div class="admin-navbar-content">
+
+                <a href="/admin/dashboard" class="admin-brand">
+                    <i class="fa-solid fa-store"></i>
+                    E-Commerce Admin
+                </a>
+
+                <div class="admin-nav-actions">
+                    <a href="/admin/orders" class="admin-back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to Orders
+                    </a>
+
+                    <a href="/auth/logout" class="admin-logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- =========================
+         ORDER DETAILS HERO
+    ========================= -->
+    <section class="admin-page-hero">
+        <div class="container">
+
+            <div class="admin-page-heading">
+
+                <span class="admin-page-badge">
+                    <i class="fa-solid fa-receipt"></i>
+                    Order Management
+                </span>
+
+                <h1>Order Details</h1>
+
+                <p>
+                    Order #<%= order._id %>
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         ORDER DETAILS CONTENT
+    ========================= -->
+    <section class="admin-order-details-content">
+        <div class="container">
+
+            <!-- =========================
+                 CUSTOMER DETAILS
+            ========================= -->
+            <div class="admin-order-detail-card">
+
+                <div class="admin-order-detail-header">
+                    <div class="admin-order-detail-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div>
+                        <h2>Customer Details</h2>
+                        <p>Information provided for this order.</p>
+                    </div>
+                </div>
+
+                <div class="admin-customer-details-grid">
+
+                    <div class="admin-detail-item">
+                        <span>
+                            <i class="fa-solid fa-user"></i>
+                            Name
+                        </span>
+                        <strong>
+                            <%= order.customerDetails.name %>
+                        </strong>
+                    </div>
+
+                    <div class="admin-detail-item">
+                        <span>
+                            <i class="fa-solid fa-phone"></i>
+                            Phone
+                        </span>
+                        <strong>
+                            <%= order.customerDetails.phone %>
+                        </strong>
+                    </div>
+
+                    <div class="admin-detail-item">
+                        <span>
+                            <i class="fa-solid fa-envelope"></i>
+                            Email
+                        </span>
+                        <strong>
+                            <%= order.user ? order.user.email : "N/A" %>
+                        </strong>
+                    </div>
+
+                    <div class="admin-detail-item admin-address-item">
+                        <span>
+                            <i class="fa-solid fa-location-dot"></i>
+                            Delivery Address
+                        </span>
+                        <strong>
+                            <%= order.customerDetails.address %>
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =========================
+                 ORDERED PRODUCTS
+            ========================= -->
+            <div class="admin-order-detail-card">
+
+                <div class="admin-order-detail-header">
+                    <div class="admin-order-detail-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+
+                    <div>
+                        <h2>Ordered Products</h2>
+                        <p>Products included in this order.</p>
+                    </div>
+                </div>
+
+                <div class="admin-ordered-products">
+
+                    <% order.products.forEach((item) => { %>
+
+                        <div class="admin-ordered-product">
+
+                            <div class="admin-ordered-product-icon">
+                                <i class="fa-solid fa-box"></i>
+                            </div>
+
+                            <div class="admin-ordered-product-info">
+
+                                <strong>
+                                    <%= item.name %>
+                                </strong>
+
+                                <span>
+                                    ₹<%= item.price %>
+                                    ×
+                                    <%= item.quantity %>
+                                </span>
+
+                            </div>
+
+                            <strong class="admin-ordered-product-total">
+                                ₹<%= item.price * item.quantity %>
+                            </strong>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+                <div class="admin-order-total-row">
+                    <span>Total Amount</span>
+
+                    <strong>
+                        ₹<%= order.totalAmount %>
+                    </strong>
+                </div>
+
+            </div>
+
+            <!-- =========================
+                 PAYMENT & ORDER INFORMATION
+            ========================= -->
+            <div class="admin-order-detail-card">
+
+                <div class="admin-order-detail-header">
+                    <div class="admin-order-detail-icon">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+
+                    <div>
+                        <h2>Payment & Order Information</h2>
+                        <p>Payment and order status details.</p>
+                    </div>
+                </div>
+
+                <div class="admin-order-info-grid">
+
+                    <!-- PAYMENT METHOD -->
+                    <div class="admin-detail-item">
+
+                        <span>
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                            Payment Method
+                        </span>
+
+                        <strong>
+                            <%= order.paymentMethod %>
+                        </strong>
+
+                    </div>
+
+                    <!-- PAYMENT STATUS -->
+                    <div class="admin-detail-item">
+
+                        <span>
+                            <i class="fa-solid fa-circle-info"></i>
+                            Payment Status
+                        </span>
+
+                        <div>
+
+                            <% if (order.paymentStatus === "Paid") { %>
+
+                                <span class="admin-status-badge payment-paid">
+                                    <i class="fa-solid fa-check"></i>
+                                    Paid
+                                </span>
+
+                            <% } else if (order.paymentStatus === "Failed") { %>
+
+                                <span class="admin-status-badge payment-failed">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    Failed
+                                </span>
+
+                            <% } else { %>
+
+                                <span class="admin-status-badge payment-pending">
+                                    <i class="fa-solid fa-clock"></i>
+                                    Pending
+                                </span>
+
+                            <% } %>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ORDER DATE -->
+                    <div class="admin-detail-item">
+
+                        <span>
+                            <i class="fa-regular fa-calendar"></i>
+                            Order Date
+                        </span>
+
+                        <strong>
+                            <%= new Date(
+                                order.createdAt
+                            ).toLocaleDateString() %>
+                        </strong>
+
+                    </div>
+
+                    <!-- ORDER STATUS -->
+                    <div class="admin-detail-item">
+
+                        <span>
+                            <i class="fa-solid fa-truck"></i>
+                            Current Order Status
+                        </span>
+
+                        <strong class="admin-current-order-status">
+                            <%= order.orderStatus %>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <!-- =========================
+                     UPDATE ORDER STATUS
+                ========================= -->
+                <div class="admin-status-update-section">
+
+                    <div class="admin-status-update-heading">
+
+                        <div class="admin-status-update-icon">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+
+                        <div>
+                            <h3>Update Order Status</h3>
+                            <p>
+                                Change the current status of this order.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <form
+                        action="/admin/orders/<%= order._id %>/status"
+                        method="POST"
+                        class="admin-status-update-form"
+                    >
+
+                        <select
+                            name="orderStatus"
+                            class="admin-status-select"
+                        >
+
+                            <option
+                                value="Placed"
+                                <%= order.orderStatus === "Placed" ? "selected" : "" %>
+                            >
+                                Placed
+                            </option>
+
+                            <option
+                                value="Processing"
+                                <%= order.orderStatus === "Processing" ? "selected" : "" %>
+                            >
+                                Processing
+                            </option>
+
+                            <option
+                                value="Shipped"
+                                <%= order.orderStatus === "Shipped" ? "selected" : "" %>
+                            >
+                                Shipped
+                            </option>
+
+                            <option
+                                value="Delivered"
+                                <%= order.orderStatus === "Delivered" ? "selected" : "" %>
+                            >
+                                Delivered
+                            </option>
+
+                            <option
+                                value="Cancelled"
+                                <%= order.orderStatus === "Cancelled" ? "selected" : "" %>
+                            >
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                        <button
+                            type="submit"
+                            class="admin-update-status-btn"
+                        >
+                            <i class="fa-solid fa-check"></i>
+                            Update Status
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
